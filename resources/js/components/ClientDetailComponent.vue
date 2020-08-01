@@ -1,18 +1,23 @@
 <template>
 <div>
-    <div v-if="cargando" class="container mx-auto text-center mt-5">
-        <div class="spinner-grow" role="status">
-              <span class="sr-only">Loading...</span>
-        </div>
-    </div>
     <div class="card">
-        <div class="card-header">
-            Featured
-        </div>
+        <div class="card-header"><h4 v-text="client.name"></h4> </div>
         <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <h5 class="card-title" ></h5>
+
+            <div v-if="loading_tiket" class="container mx-auto text-center mt-5">
+                <div class="spinner-grow" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+
+            <div class="tikets" >
+                <ul v-for="(tiket, index) in tikets" :key="index">
+                    <li> {{tiket.amount}} </li>
+                </ul>
+            </div>
+
+            <a href="#" class="btn btn-primary">ClientDetail</a>
         </div>
     </div>
 </div>
@@ -21,28 +26,28 @@
 <script>
     import axios from 'axios';
     export default {
+        props: ['client'],
         data() {
             return {
-                clients: null,
+                client: {
+                    // name: '',
+                    // id: '',
+                },
                 tikets: null,
-                loader_clients: true,
-                cargando: true
-            }
+                loading_tiket: true,
+                // id = client.id,
+            };
         },
         mounted() {
-            this.getClients();
-            this.getTikets();
+            getTikets(5)
         },
         methods: {
-            getClients: function() {
-                axios.get('getClients').then(response => {
-                    this.clients = response.data.clients;
-                    this.cargando = false;
-                });
-            },
-            getTikets: function() {
-                axios.get('getTikets').then(response => {
+            getTikets(id) {
+                axios.get(`getTikets/${client.id}`).then(response => {
                     this.tikets = response.data.tikets;
+                    this.loading_tiket = false;
+                    console.log(this.tikets);
+
                 });
             },
         }

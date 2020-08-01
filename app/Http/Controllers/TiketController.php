@@ -16,16 +16,12 @@ class TiketController extends Controller
     {
         //
     }
-    public function getTikets()
+    public function getTikets($id)
     {
-        $tikets = Tiket::all();
+        $tikets = Tiket::where('client_id', $id)->get();
         return response()->json(["tikets"=>$tikets]);
     }
-    public function getTiket()
-    {
-        $tikets = Tiket::all();
-        return response()->json(["tikets"=>$tikets]);
-    }
+
 
     /**
      * Show the form for creating a new resource.

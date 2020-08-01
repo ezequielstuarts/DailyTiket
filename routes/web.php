@@ -21,9 +21,13 @@ Auth::routes();
 
 Route::get('/', 'ClientController@index')->name('/');
 Route::get('home', 'ClientController@index')->name('home');
+
+Route::get('getClient/{id}', 'ClientController@getClient');
+
 Route::get('getClients', 'ClientController@getClients')->name('getClients');
-Route::get('getTikets', 'TiketController@getTikets');
-Route::get('getTikets/{id}', 'TiketController@getTiket');
+
+Route::get('getTikets/{id}', 'TiketController@getTikets');
+
 // Route::get('home', 'HomeController@index')->name('home');
 
 Auth::routes();

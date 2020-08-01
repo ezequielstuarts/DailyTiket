@@ -1955,6 +1955,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -1962,13 +1969,12 @@ __webpack_require__.r(__webpack_exports__);
       clients: null,
       tikets: null,
       loading_clients: true,
-      loading_tikets: true,
-      id: 5
+      loading_tiket: true,
+      client: null
     };
   },
   mounted: function mounted() {
     this.getClients();
-    this.getTikets();
   },
   methods: {
     getClients: function getClients() {
@@ -1977,18 +1983,23 @@ __webpack_require__.r(__webpack_exports__);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('getClients').then(function (response) {
         _this.clients = response.data.clients;
         _this.loading_clients = false;
-        console.log(_this.clients);
       });
     },
-    getTikets: function getTikets() {
+    getClient: function getClient(id) {
       var _this2 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('getTikets').then(function (response) {
-        _this2.tikets = response.data.tikets;
-        _this2.loading_tikets = false;
-      })["catch"](function (error) {
-        // handle error
-        console.log(error);
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("getClient/".concat(id)).then(function (response) {
+        _this2.client = response.data.client;
+
+        _this2.getTikets(id);
+      });
+    },
+    getTikets: function getTikets(id) {
+      var _this3 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("getTikets/".concat(id)).then(function (response) {
+        _this3.tikets = response.data.tikets;
+        _this3.loading_tiket = false;
       });
     }
   }
@@ -2027,34 +2038,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['client'],
   data: function data() {
     return {
-      clients: null,
+      client: {// name: '',
+        // id: '',
+      },
       tikets: null,
-      loader_clients: true,
-      cargando: true
+      loading_tiket: true // id = client.id,
+
     };
   },
   mounted: function mounted() {
-    this.getClients();
-    this.getTikets();
+    getTikets(5);
   },
   methods: {
-    getClients: function getClients() {
+    getTikets: function getTikets(id) {
       var _this = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('getClients').then(function (response) {
-        _this.clients = response.data.clients;
-        _this.cargando = false;
-      });
-    },
-    getTikets: function getTikets() {
-      var _this2 = this;
-
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('getTikets').then(function (response) {
-        _this2.tikets = response.data.tikets;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("getTikets/".concat(client.id)).then(function (response) {
+        _this.tikets = response.data.tikets;
+        _this.loading_tiket = false;
+        console.log(_this.tikets);
       });
     }
   }
@@ -37700,9 +37712,9 @@ var render = function() {
           _c(
             "div",
             { staticClass: "card-columns" },
-            _vm._l(_vm.clients, function(client) {
-              return _c("div", { key: client.id, staticClass: "card" }, [
-                _c("h5", { staticClass: "card-header" }, [
+            _vm._l(_vm.clients, function(client, index) {
+              return _c("div", { key: index, staticClass: "card" }, [
+                _c("h6", { staticClass: "card-header" }, [
                   _vm._v(" " + _vm._s(client.name) + " ")
                 ]),
                 _vm._v(" "),
@@ -37715,9 +37727,16 @@ var render = function() {
                   _c("p"),
                   _vm._v(" "),
                   _c(
-                    "a",
-                    { staticClass: "btn btn-primary", attrs: { href: "#" } },
-                    [_vm._v("Ver")]
+                    "button",
+                    {
+                      staticClass: "btn-sm btn-primary",
+                      on: {
+                        click: function($event) {
+                          return _vm.getClient(client.id)
+                        }
+                      }
+                    },
+                    [_vm._v("Ver Detalle")]
                   )
                 ])
               ])
@@ -37726,15 +37745,76 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-4 fix" }, [
-          _vm.loading_tikets
-            ? _c("div", { staticClass: "container mx-auto text-center mt-5" }, [
-                _vm._m(1)
+        _vm.client
+          ? _c("div", { staticClass: "col-4" }, [
+              _c("div", { staticClass: "card" }, [
+                _vm.loading_tiket
+                  ? _c(
+                      "div",
+                      { staticClass: "container mx-auto text-center mt-5" },
+                      [_vm._m(1)]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-header" }, [
+                  _c("h4", {
+                    domProps: { textContent: _vm._s(_vm.client.name) }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("h5", { staticClass: "card-title" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "container tikets" }, [
+                    _c("table", { staticClass: "table table-hover" }, [
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.tikets, function(tiket, index) {
+                          return _c("tr", { key: index }, [
+                            _c("td", [_vm._v(_vm._s(tiket.amount))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c("a", { attrs: { href: "" } }, [
+                                _c(
+                                  "svg",
+                                  {
+                                    staticClass: "bi bi-trash",
+                                    attrs: {
+                                      width: "1em",
+                                      height: "1em",
+                                      viewBox: "0 0 16 16",
+                                      fill: "currentColor",
+                                      xmlns: "http://www.w3.org/2000/svg"
+                                    }
+                                  },
+                                  [
+                                    _c("path", {
+                                      attrs: {
+                                        d:
+                                          "M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
+                                      }
+                                    }),
+                                    _c("path", {
+                                      attrs: {
+                                        "fill-rule": "evenodd",
+                                        d:
+                                          "M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+                                      }
+                                    })
+                                  ]
+                                )
+                              ])
+                            ])
+                          ])
+                        }),
+                        0
+                      )
+                    ])
+                  ])
+                ])
               ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm._m(2)
-        ])
+            ])
+          : _vm._e()
       ])
     ])
   ])
@@ -37759,32 +37839,6 @@ var staticRenderFns = [
       { staticClass: "spinner-grow", attrs: { role: "status" } },
       [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-header" }, [
-        _vm._v("\n                        Featured\n                    ")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c("h5", { staticClass: "card-title" }, [
-          _vm._v("Special title treatment")
-        ]),
-        _vm._v(" "),
-        _c("p", { staticClass: "card-text" }, [
-          _vm._v(
-            "With supporting text below as a natural lead-in to additional content."
-          )
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "btn btn-primary", attrs: { href: "#" } }, [
-          _vm._v("Go somewhere")
-        ])
-      ])
-    ])
   }
 ]
 render._withStripped = true
@@ -37809,13 +37863,36 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm.cargando
-      ? _c("div", { staticClass: "container mx-auto text-center mt-5" }, [
-          _vm._m(0)
+    _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-header" }, [
+        _c("h4", { domProps: { textContent: _vm._s(_vm.client.name) } })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c("h5", { staticClass: "card-title" }),
+        _vm._v(" "),
+        _vm.loading_tiket
+          ? _c("div", { staticClass: "container mx-auto text-center mt-5" }, [
+              _vm._m(0)
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "tikets" },
+          _vm._l(_vm.tikets, function(tiket, index) {
+            return _c("ul", { key: index }, [
+              _c("li", [_vm._v(" " + _vm._s(tiket.amount) + " ")])
+            ])
+          }),
+          0
+        ),
+        _vm._v(" "),
+        _c("a", { staticClass: "btn btn-primary", attrs: { href: "#" } }, [
+          _vm._v("ClientDetail")
         ])
-      : _vm._e(),
-    _vm._v(" "),
-    _vm._m(1)
+      ])
+    ])
   ])
 }
 var staticRenderFns = [
@@ -37828,32 +37905,6 @@ var staticRenderFns = [
       { staticClass: "spinner-grow", attrs: { role: "status" } },
       [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-header" }, [
-        _vm._v("\n            Featured\n        ")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c("h5", { staticClass: "card-title" }, [
-          _vm._v("Special title treatment")
-        ]),
-        _vm._v(" "),
-        _c("p", { staticClass: "card-text" }, [
-          _vm._v(
-            "With supporting text below as a natural lead-in to additional content."
-          )
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "btn btn-primary", attrs: { href: "#" } }, [
-          _vm._v("Go somewhere")
-        ])
-      ])
-    ])
   }
 ]
 render._withStripped = true
@@ -50221,14 +50272,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!***********************************************************!*\
   !*** ./resources/js/components/ClientDetailComponent.vue ***!
   \***********************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ClientDetailComponent_vue_vue_type_template_id_47c62af4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ClientDetailComponent.vue?vue&type=template&id=47c62af4& */ "./resources/js/components/ClientDetailComponent.vue?vue&type=template&id=47c62af4&");
 /* harmony import */ var _ClientDetailComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ClientDetailComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/ClientDetailComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _ClientDetailComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _ClientDetailComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -50258,7 +50310,7 @@ component.options.__file = "resources/js/components/ClientDetailComponent.vue"
 /*!************************************************************************************!*\
   !*** ./resources/js/components/ClientDetailComponent.vue?vue&type=script&lang=js& ***!
   \************************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
