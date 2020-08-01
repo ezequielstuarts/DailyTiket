@@ -17,7 +17,7 @@ class CreateTiketsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('client_id')->nulleable();
             $table->foreign('client_id')->references('id')->on('clients');
-            $table->decimal('price', 8,2);
+            $table->decimal('amount', 8,2);
             $table->timestamps();
         });
     }

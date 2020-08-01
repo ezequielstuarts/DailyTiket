@@ -16,6 +16,16 @@ class TiketController extends Controller
     {
         //
     }
+    public function getTikets()
+    {
+        $tikets = Tiket::all();
+        return response()->json(["tikets"=>$tikets]);
+    }
+    public function getTiket()
+    {
+        $tikets = Tiket::all();
+        return response()->json(["tikets"=>$tikets]);
+    }
 
     /**
      * Show the form for creating a new resource.

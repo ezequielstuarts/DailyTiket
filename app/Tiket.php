@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tiket extends Model
 {
-    protected $fillable = [
-        'price'
-    ];
+    public $table = "tikets";
+    protected $fillable = ['amount', 'client_id'];
+
+    public function client() {
+        return $this->belongsTo("App\Client", "id");
+    }
 }
