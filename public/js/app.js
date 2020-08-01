@@ -1962,6 +1962,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -1994,12 +2000,26 @@ __webpack_require__.r(__webpack_exports__);
         _this2.getTikets(id);
       });
     },
+    suma: function suma(ti) {
+      console.log(ti);
+    },
     getTikets: function getTikets(id) {
       var _this3 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("getTikets/".concat(id)).then(function (response) {
         _this3.tikets = response.data.tikets;
+
+        _this3.suma(_this3.tikets);
+
         _this3.loading_tiket = false;
+      });
+    },
+    deleteTiket: function deleteTiket(tiket, client) {
+      var _this4 = this;
+
+      console.log(tiket.id);
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]("deleteTiket/".concat(tiket.id)).then(function (response) {
+        _this4.getTikets(client.id);
       });
     }
   }
@@ -37756,55 +37776,126 @@ var render = function() {
                     )
                   : _vm._e(),
                 _vm._v(" "),
-                _c("div", { staticClass: "card-header" }, [
-                  _c("h4", {
-                    domProps: { textContent: _vm._s(_vm.client.name) }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("h5", { staticClass: "card-title" }),
-                _vm._v(" "),
                 _c("div", { staticClass: "row" }, [
                   _c("div", { staticClass: "container tikets" }, [
                     _c("table", { staticClass: "table table-hover" }, [
+                      _c("thead", [
+                        _c("tr", [
+                          _c("th", {
+                            attrs: { colspan: "3" },
+                            domProps: { textContent: _vm._s(_vm.client.name) }
+                          })
+                        ])
+                      ]),
+                      _vm._v(" "),
                       _c(
                         "tbody",
+                        { staticClass: "icon-action-client" },
                         _vm._l(_vm.tikets, function(tiket, index) {
                           return _c("tr", { key: index }, [
                             _c("td", [_vm._v(_vm._s(tiket.amount))]),
                             _vm._v(" "),
-                            _c("td", [
-                              _c("a", { attrs: { href: "" } }, [
+                            _c(
+                              "td",
+                              {
+                                staticClass: "icon-action-client",
+                                attrs: { width: "10px" }
+                              },
+                              [
                                 _c(
-                                  "svg",
+                                  "a",
                                   {
-                                    staticClass: "bi bi-trash",
-                                    attrs: {
-                                      width: "1em",
-                                      height: "1em",
-                                      viewBox: "0 0 16 16",
-                                      fill: "currentColor",
-                                      xmlns: "http://www.w3.org/2000/svg"
+                                    attrs: { href: "" },
+                                    on: {
+                                      click: function($event) {
+                                        $event.preventDefault()
+                                        return _vm.deleteTiket(
+                                          tiket,
+                                          _vm.client
+                                        )
+                                      }
                                     }
                                   },
                                   [
-                                    _c("path", {
-                                      attrs: {
-                                        d:
-                                          "M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
-                                      }
-                                    }),
-                                    _c("path", {
-                                      attrs: {
-                                        "fill-rule": "evenodd",
-                                        d:
-                                          "M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
-                                      }
-                                    })
+                                    _c(
+                                      "svg",
+                                      {
+                                        staticClass: "bi bi-trash",
+                                        attrs: {
+                                          width: "1em",
+                                          height: "1em",
+                                          viewBox: "0 0 16 16",
+                                          fill: "currentColor",
+                                          xmlns: "http://www.w3.org/2000/svg"
+                                        }
+                                      },
+                                      [
+                                        _c("path", {
+                                          attrs: {
+                                            d:
+                                              "M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
+                                          }
+                                        }),
+                                        _c("path", {
+                                          attrs: {
+                                            "fill-rule": "evenodd",
+                                            d:
+                                              "M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+                                          }
+                                        })
+                                      ]
+                                    )
                                   ]
                                 )
-                              ])
-                            ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "td",
+                              {
+                                staticClass: "icon-action-client",
+                                attrs: { width: "10px" }
+                              },
+                              [
+                                _c("a", { attrs: { href: "" } }, [
+                                  _c(
+                                    "svg",
+                                    {
+                                      staticClass: "bi bi-pen",
+                                      attrs: {
+                                        width: "1em",
+                                        height: "1em",
+                                        viewBox: "0 0 16 16",
+                                        fill: "currentColor",
+                                        xmlns: "http://www.w3.org/2000/svg"
+                                      }
+                                    },
+                                    [
+                                      _c("path", {
+                                        attrs: {
+                                          "fill-rule": "evenodd",
+                                          d:
+                                            "M5.707 13.707a1 1 0 0 1-.39.242l-3 1a1 1 0 0 1-1.266-1.265l1-3a1 1 0 0 1 .242-.391L10.086 2.5a2 2 0 0 1 2.828 0l.586.586a2 2 0 0 1 0 2.828l-7.793 7.793zM3 11l7.793-7.793a1 1 0 0 1 1.414 0l.586.586a1 1 0 0 1 0 1.414L5 13l-3 1 1-3z"
+                                        }
+                                      }),
+                                      _c("path", {
+                                        attrs: {
+                                          "fill-rule": "evenodd",
+                                          d:
+                                            "M9.854 2.56a.5.5 0 0 0-.708 0L5.854 5.855a.5.5 0 0 1-.708-.708L8.44 1.854a1.5 1.5 0 0 1 2.122 0l.293.292a.5.5 0 0 1-.707.708l-.293-.293z"
+                                        }
+                                      }),
+                                      _c("path", {
+                                        attrs: {
+                                          d:
+                                            "M13.293 1.207a1 1 0 0 1 1.414 0l.03.03a1 1 0 0 1 .03 1.383L13.5 4 12 2.5l1.293-1.293z"
+                                        }
+                                      })
+                                    ]
+                                  )
+                                ])
+                              ]
+                            )
                           ])
                         }),
                         0
@@ -50203,14 +50294,15 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*!*****************************************************!*\
   !*** ./resources/js/components/ClientComponent.vue ***!
   \*****************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ClientComponent_vue_vue_type_template_id_778f3e52___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ClientComponent.vue?vue&type=template&id=778f3e52& */ "./resources/js/components/ClientComponent.vue?vue&type=template&id=778f3e52&");
 /* harmony import */ var _ClientComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ClientComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/ClientComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _ClientComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _ClientComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -50240,7 +50332,7 @@ component.options.__file = "resources/js/components/ClientComponent.vue"
 /*!******************************************************************************!*\
   !*** ./resources/js/components/ClientComponent.vue?vue&type=script&lang=js& ***!
   \******************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -50272,15 +50364,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!***********************************************************!*\
   !*** ./resources/js/components/ClientDetailComponent.vue ***!
   \***********************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ClientDetailComponent_vue_vue_type_template_id_47c62af4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ClientDetailComponent.vue?vue&type=template&id=47c62af4& */ "./resources/js/components/ClientDetailComponent.vue?vue&type=template&id=47c62af4&");
 /* harmony import */ var _ClientDetailComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ClientDetailComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/ClientDetailComponent.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _ClientDetailComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _ClientDetailComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -50310,7 +50401,7 @@ component.options.__file = "resources/js/components/ClientDetailComponent.vue"
 /*!************************************************************************************!*\
   !*** ./resources/js/components/ClientDetailComponent.vue?vue&type=script&lang=js& ***!
   \************************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

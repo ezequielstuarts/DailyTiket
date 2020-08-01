@@ -27,6 +27,7 @@ Route::get('getClient/{id}', 'ClientController@getClient');
 Route::get('getClients', 'ClientController@getClients')->name('getClients');
 
 Route::get('getTikets/{id}', 'TiketController@getTikets');
+Route::delete('deleteTiket/{id}', 'TiketController@destroy');
 
 // Route::get('home', 'HomeController@index')->name('home');
 

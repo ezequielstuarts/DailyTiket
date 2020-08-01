@@ -74,12 +74,13 @@
         </nav>
 
         <main class="py-4">
-            <div class="container">
+            <div class="continer">
                 <div class="row">
                     @yield('content')
                 </div>
             </div>
         </main>
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 </body>
 </html>

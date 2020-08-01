@@ -84,8 +84,10 @@ class TiketController extends Controller
      * @param  \App\Tiket  $tiket
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tiket $tiket)
+    public function destroy($id)
     {
-        //
+        $tiket = Tiket::find($id);
+        $tiket->delete();
+        return 'ok';
     }
 }
