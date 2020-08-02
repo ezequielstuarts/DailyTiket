@@ -87,7 +87,8 @@ class TiketController extends Controller
     public function destroy($id)
     {
         $tiket = Tiket::find($id);
-        $tiket->delete();
-        return 'ok';
+        if ($tiket->delete()) {
+            return response()->json(null, 204);
+        }
     }
 }

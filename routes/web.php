@@ -26,6 +26,8 @@ Route::get('getClient/{id}', 'ClientController@getClient');
 
 Route::get('getClients', 'ClientController@getClients')->name('getClients');
 
+Route::post('clients', 'ClientController@store')->name('clients');
+
 Route::get('getTikets/{id}', 'TiketController@getTikets');
 Route::delete('deleteTiket/{id}', 'TiketController@destroy');
 

@@ -19,7 +19,7 @@ class ClientController extends Controller
     }
     public function getClients()
     {
-        $clients = Client::all();
+        $clients = Client::orderBy('id', 'DESC')->get();;
         return response()->json(["clients" => $clients]);
         // return view('home', ['clients'=> $clients]);
     }
@@ -42,7 +42,11 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|unique:clients,name',
+        ]);
+        Client::create($request->all());
+        return;
     }
 
 

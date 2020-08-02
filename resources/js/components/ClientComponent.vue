@@ -1,5 +1,36 @@
+
 <template>
 <div>
+    <div class="row">
+        <div class="container-fluid">
+            <a href="#" class="btn btn-primary float-right mb-3" data-toggle="modal" data-target="#modalNewClient"><i class="fas fa-plus"></i> Nuevo Cliente</a>
+        </div>
+    </div>
+
+    <form v-on:submit.prevent="createClient" method="post">
+    <div class="modal fade" id="modalNewClient" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Nuevo Cliente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label for="name">Nombre del cliente</label>
+                <input type="text" name="name" class="form-control" v-model="newClient">
+                <span v-for="error in errors" class="text-danger"> {{error}} </span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    </form>
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-8">
@@ -64,6 +95,8 @@
 
 <script>
     import axios from 'axios';
+    import toastr from 'toastr';
+    import Swal from 'sweetalert2'
     export default {
         data() {
             return {
@@ -72,6 +105,8 @@
                 loading_clients: true,
                 loading_tiket: true,
                 client: null,
+                newClient: '',
+                errors: [],
             }
         },
         mounted() {
@@ -101,14 +136,39 @@
                 });
             },
             deleteTiket(tiket, client) {
-                console.log(tiket.id);
-                axios.delete(`deleteTiket/${tiket.id}`).then(response => {
-                    this.getTikets(client.id);
+                Swal.fire({
+                title: 'Desea eliminar este mensaje',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#13b7da',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Si, borrar!'
+                }).then((result) => {
+                if (result.value) {
+                    axios.delete(`deleteTiket/${tiket.id}`).then(response => {
+                        this.getTikets(client.id);
+                        toastr.success('Tiket eliminado');
+                    })
+                    .catch(error => toastr.error('Sucedio algun error</b>!'))
+                    }
+                })
+            },
+            createClient: function() {
+                var url = 'clients';
+                axios.post(url, {
+                    name: this.newClient,
+                }).then(response => {
+                    this.getClients();
+                    this.newClient = '';
+                    this.errors = [];
+                    $('#modalNewClient').modal('hide');
+                    toastr.success('Cliente Agregado');
+                }).catch(error => {
+                    this.errors = error.response.data.errors.name
+                    console.log(this.errors.errors.name);
                 });
             },
         }
     };
 </script>
-
-
-

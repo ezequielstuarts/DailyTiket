@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container-fluid">
+
     <client-component></client-component>
     {{-- <div class="row">
         <div class="col-8">
