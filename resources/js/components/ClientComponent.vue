@@ -13,8 +13,12 @@
                         <h6 class="card-header"> {{client.name}} </h6>
                         <div class="card-body">
                             <h5 class="card-title">Total: $ {{client.total}} </h5>
-                            <p class="card-text">
-                            <p> </p>
+                            <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <div class="input-group-append">
+                                <button class="btn-sm btn-outline-secondary" type="button" id="button-addon2">+</button>
+                            </div>
+                            </div>
                             <button @click="getClient(client.id)" class="btn-sm btn-primary">Ver Detalle</button>
                         </div>
                     </div>

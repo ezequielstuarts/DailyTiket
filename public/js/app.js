@@ -1968,6 +1968,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -37743,8 +37747,7 @@ var render = function() {
                     _vm._v("Total: $ " + _vm._s(client.total) + " ")
                   ]),
                   _vm._v(" "),
-                  _c("p", { staticClass: "card-text" }),
-                  _c("p"),
+                  _vm._m(1, true),
                   _vm._v(" "),
                   _c(
                     "button",
@@ -37772,7 +37775,7 @@ var render = function() {
                   ? _c(
                       "div",
                       { staticClass: "container mx-auto text-center mt-5" },
-                      [_vm._m(1)]
+                      [_vm._m(2)]
                     )
                   : _vm._e(),
                 _vm._v(" "),
@@ -37920,6 +37923,33 @@ var staticRenderFns = [
       { staticClass: "spinner-grow", attrs: { role: "status" } },
       [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group mb-3" }, [
+      _c("input", {
+        staticClass: "form-control",
+        attrs: {
+          type: "text",
+          placeholder: "Recipient's username",
+          "aria-label": "Recipient's username",
+          "aria-describedby": "button-addon2"
+        }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "input-group-append" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn-sm btn-outline-secondary",
+            attrs: { type: "button", id: "button-addon2" }
+          },
+          [_vm._v("+")]
+        )
+      ])
+    ])
   },
   function() {
     var _vm = this

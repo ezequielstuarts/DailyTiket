@@ -74,11 +74,7 @@
         </nav>
 
         <main class="py-4">
-            <div class="continer">
-                <div class="row">
-                    @yield('content')
-                </div>
-            </div>
+            @yield('content')
         </main>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
