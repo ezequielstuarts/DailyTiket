@@ -1972,6 +1972,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -37808,7 +37810,10 @@ var render = function() {
                                 _c(
                                   "a",
                                   {
-                                    attrs: { href: "" },
+                                    attrs: {
+                                      href: "",
+                                      title: "Eliminar Tiket"
+                                    },
                                     on: {
                                       click: function($event) {
                                         $event.preventDefault()
@@ -37819,86 +37824,12 @@ var render = function() {
                                       }
                                     }
                                   },
-                                  [
-                                    _c(
-                                      "svg",
-                                      {
-                                        staticClass: "bi bi-trash",
-                                        attrs: {
-                                          width: "1em",
-                                          height: "1em",
-                                          viewBox: "0 0 16 16",
-                                          fill: "currentColor",
-                                          xmlns: "http://www.w3.org/2000/svg"
-                                        }
-                                      },
-                                      [
-                                        _c("path", {
-                                          attrs: {
-                                            d:
-                                              "M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
-                                          }
-                                        }),
-                                        _c("path", {
-                                          attrs: {
-                                            "fill-rule": "evenodd",
-                                            d:
-                                              "M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
-                                          }
-                                        })
-                                      ]
-                                    )
-                                  ]
+                                  [_c("i", { staticClass: "far fa-trash-alt" })]
                                 )
                               ]
                             ),
                             _vm._v(" "),
-                            _c(
-                              "td",
-                              {
-                                staticClass: "icon-action-client",
-                                attrs: { width: "10px" }
-                              },
-                              [
-                                _c("a", { attrs: { href: "" } }, [
-                                  _c(
-                                    "svg",
-                                    {
-                                      staticClass: "bi bi-pen",
-                                      attrs: {
-                                        width: "1em",
-                                        height: "1em",
-                                        viewBox: "0 0 16 16",
-                                        fill: "currentColor",
-                                        xmlns: "http://www.w3.org/2000/svg"
-                                      }
-                                    },
-                                    [
-                                      _c("path", {
-                                        attrs: {
-                                          "fill-rule": "evenodd",
-                                          d:
-                                            "M5.707 13.707a1 1 0 0 1-.39.242l-3 1a1 1 0 0 1-1.266-1.265l1-3a1 1 0 0 1 .242-.391L10.086 2.5a2 2 0 0 1 2.828 0l.586.586a2 2 0 0 1 0 2.828l-7.793 7.793zM3 11l7.793-7.793a1 1 0 0 1 1.414 0l.586.586a1 1 0 0 1 0 1.414L5 13l-3 1 1-3z"
-                                        }
-                                      }),
-                                      _c("path", {
-                                        attrs: {
-                                          "fill-rule": "evenodd",
-                                          d:
-                                            "M9.854 2.56a.5.5 0 0 0-.708 0L5.854 5.855a.5.5 0 0 1-.708-.708L8.44 1.854a1.5 1.5 0 0 1 2.122 0l.293.292a.5.5 0 0 1-.707.708l-.293-.293z"
-                                        }
-                                      }),
-                                      _c("path", {
-                                        attrs: {
-                                          d:
-                                            "M13.293 1.207a1 1 0 0 1 1.414 0l.03.03a1 1 0 0 1 .03 1.383L13.5 4 12 2.5l1.293-1.293z"
-                                        }
-                                      })
-                                    ]
-                                  )
-                                ])
-                              ]
-                            )
+                            _vm._m(3, true)
                           ])
                         }),
                         0
@@ -37931,12 +37862,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "input-group mb-3" }, [
       _c("input", {
         staticClass: "form-control",
-        attrs: {
-          type: "text",
-          placeholder: "Recipient's username",
-          "aria-label": "Recipient's username",
-          "aria-describedby": "button-addon2"
-        }
+        attrs: { type: "text", placeholder: "Agregar Tiket" }
       }),
       _vm._v(" "),
       _c("div", { staticClass: "input-group-append" }, [
@@ -37944,9 +37870,9 @@ var staticRenderFns = [
           "button",
           {
             staticClass: "btn-sm btn-outline-secondary",
-            attrs: { type: "button", id: "button-addon2" }
+            attrs: { type: "button", id: "addTiket", title: "Agregar Tiket" }
           },
-          [_vm._v("+")]
+          [_c("i", { staticClass: "fas fa-cart-plus" })]
         )
       ])
     ])
@@ -37959,6 +37885,23 @@ var staticRenderFns = [
       "div",
       { staticClass: "spinner-grow", attrs: { role: "status" } },
       [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "td",
+      {
+        staticClass: "icon-action-client",
+        attrs: { width: "10px", title: "Editar Tiket" }
+      },
+      [
+        _c("a", { attrs: { href: "" } }, [
+          _c("i", { staticClass: "fas fa-pen" })
+        ])
+      ]
     )
   }
 ]
