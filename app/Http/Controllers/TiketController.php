@@ -36,7 +36,7 @@ class TiketController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'amount' => 'required',
+            'amount' => 'required|numeric|min:1|max:99999.99|regex:/^\d*(\.\d{2})?$/',
         ]);
         if (Tiket::create($request->all())) {
             return;
