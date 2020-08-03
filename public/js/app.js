@@ -2009,6 +2009,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2016,11 +2036,12 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       clients: null,
-      tikets: null,
+      tikets: 0,
       loading_clients: true,
       loading_tiket: true,
       client: null,
       newClient: '',
+      newAmount: '',
       errors: []
     };
   },
@@ -2043,11 +2064,11 @@ __webpack_require__.r(__webpack_exports__);
         _this2.client = response.data.client;
 
         _this2.getTikets(id);
+
+        _this2.loading_client = false;
       });
     },
-    suma: function suma(ti) {
-      console.log(ti);
-    },
+    suma: function suma(ti) {},
     getTikets: function getTikets(id) {
       var _this3 = this;
 
@@ -2082,22 +2103,64 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    createClient: function createClient() {
+    deleteClient: function deleteClient(client) {
       var _this5 = this;
+
+      sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire({
+        title: 'Desea eliminar este cliente',
+        html: '<b><div class="text-danger">Se borraran todos los tikets <br/> </b>asociados a este cliente!</div>.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButton: 'btn-sm btn-success',
+        cancelButton: 'btn-sm btn-danger',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, borrar!'
+      }).then(function (result) {
+        if (result.value) {
+          axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]("deleteClient/".concat(client)).then(function (response) {
+            _this5.getClients();
+
+            toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Cliente eliminado');
+          })["catch"](function (error) {
+            return toastr__WEBPACK_IMPORTED_MODULE_1___default.a.error('Sucedio algun error</b>!');
+          });
+        }
+      });
+    },
+    createClient: function createClient() {
+      var _this6 = this;
 
       var url = 'clients';
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(url, {
         name: this.newClient
       }).then(function (response) {
-        _this5.getClients();
+        _this6.getClients();
 
-        _this5.newClient = '';
-        _this5.errors = [];
+        _this6.newClient = '';
+        _this6.errors = [];
         $('#modalNewClient').modal('hide');
         toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Cliente Agregado');
       })["catch"](function (error) {
-        _this5.errors = error.response.data.errors.name;
-        console.log(_this5.errors.errors.name);
+        _this6.errors = error.response.data.errors.name;
+      });
+    },
+    createTiket: function createTiket(client, newAmount) {
+      var _this7 = this;
+
+      var url = 'tikets';
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(url, {
+        amount: this.newAmount,
+        client_id: this.client.id
+      }).then(function (response) {
+        _this7.newAmount = '';
+        _this7.errors = [];
+
+        _this7.getTikets(client);
+
+        toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Tiket Agregado');
+      })["catch"](function (error) {
+        _this7.errors = error.response.data.errors.amount;
+        console.log(_this7.errors);
       });
     }
   }
@@ -41568,23 +41631,44 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "card-body" }, [
                   _c("h5", { staticClass: "card-title" }, [
-                    _vm._v("Total: $ " + _vm._s(client.total) + " ")
+                    _vm._v("Total: $ " + _vm._s(client.id) + " ")
                   ]),
                   _vm._v(" "),
-                  _vm._m(4, true),
+                  _c("div", { staticClass: "input-group mb-3" }),
                   _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn-sm btn-primary",
-                      on: {
-                        click: function($event) {
-                          return _vm.getClient(client.id)
-                        }
-                      }
-                    },
-                    [_vm._v("Ver Detalle")]
-                  )
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-4" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn-sm btn-info",
+                          on: {
+                            click: function($event) {
+                              return _vm.getClient(client.id)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "far fa-eye" })]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-4" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn-sm btn-danger",
+                          on: {
+                            click: function($event) {
+                              return _vm.deleteClient(client.id)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "far fa-trash-alt" })]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-4" })
+                  ])
                 ])
               ])
             }),
@@ -41594,72 +41678,153 @@ var render = function() {
         _vm._v(" "),
         _vm.client
           ? _c("div", { staticClass: "col-4" }, [
-              _c("div", { staticClass: "card" }, [
-                _vm.loading_tiket
-                  ? _c(
+              _vm.tikets.length <= 0
+                ? _c("div", [
+                    _c(
                       "div",
-                      { staticClass: "container mx-auto text-center mt-5" },
-                      [_vm._m(5)]
+                      {
+                        staticClass: "alert alert-info",
+                        attrs: { role: "alert" }
+                      },
+                      [
+                        _vm._m(4),
+                        _vm._v(" "),
+                        _c("b", [_vm._v(_vm._s(_vm.client.name))]),
+                        _vm._v(", no contiene tikets.\n                    ")
+                      ]
                     )
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "container tikets" }, [
-                    _c("table", { staticClass: "table table-hover" }, [
-                      _c("thead", [
-                        _c("tr", [
-                          _c("th", {
-                            attrs: { colspan: "3" },
-                            domProps: { textContent: _vm._s(_vm.client.name) }
-                          })
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "tbody",
-                        { staticClass: "icon-action-client" },
-                        _vm._l(_vm.tikets, function(tiket, index) {
-                          return _c("tr", { key: index }, [
-                            _c("td", [_vm._v(_vm._s(tiket.amount))]),
-                            _vm._v(" "),
+                  ])
+                : _c("div", { staticClass: "card" }, [
+                    _vm.loading_tiket
+                      ? _c(
+                          "div",
+                          { staticClass: "container mx-auto text-center mt-5" },
+                          [_vm._m(5)]
+                        )
+                      : _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "container tikets" }, [
                             _c(
-                              "td",
+                              "form",
                               {
-                                staticClass: "icon-action-client",
-                                attrs: { width: "10px" }
+                                attrs: { method: "post" },
+                                on: {
+                                  submit: function($event) {
+                                    $event.preventDefault()
+                                    return _vm.createTiket(_vm.client.id)
+                                  }
+                                }
                               },
                               [
                                 _c(
-                                  "a",
-                                  {
-                                    attrs: {
-                                      href: "",
-                                      title: "Eliminar Tiket"
-                                    },
-                                    on: {
-                                      click: function($event) {
-                                        $event.preventDefault()
-                                        return _vm.deleteTiket(
-                                          tiket,
-                                          _vm.client
-                                        )
+                                  "div",
+                                  { staticClass: "input-group mb-3" },
+                                  [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.newAmount,
+                                          expression: "newAmount"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        type: "text",
+                                        placeholder: "Agregar Tiket",
+                                        name: "newAmount"
+                                      },
+                                      domProps: { value: _vm.newAmount },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.newAmount = $event.target.value
+                                        }
                                       }
-                                    }
-                                  },
-                                  [_c("i", { staticClass: "far fa-trash-alt" })]
+                                    }),
+                                    _vm._v(" "),
+                                    _vm._m(6),
+                                    _vm._v(" "),
+                                    _vm._l(_vm.errors, function(error) {
+                                      return _c(
+                                        "span",
+                                        { staticClass: "text-danger" },
+                                        [_vm._v(" " + _vm._s(error) + " ")]
+                                      )
+                                    })
+                                  ],
+                                  2
                                 )
                               ]
                             ),
                             _vm._v(" "),
-                            _vm._m(6, true)
+                            _c("table", { staticClass: "table table-hover" }, [
+                              _c("thead", { staticClass: "bg-light" }, [
+                                _c("tr", [
+                                  _c("th", {
+                                    attrs: { colspan: "2" },
+                                    domProps: {
+                                      textContent: _vm._s(_vm.client.name)
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _vm._m(7)
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "tbody",
+                                { staticClass: "icon-action-client" },
+                                _vm._l(_vm.tikets, function(tiket, index) {
+                                  return _c("tr", { key: index }, [
+                                    _c("td", [
+                                      _vm._v("$ " + _vm._s(tiket.amount))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      {
+                                        staticClass: "icon-action-client",
+                                        attrs: { width: "10px" }
+                                      },
+                                      [
+                                        _c(
+                                          "a",
+                                          {
+                                            attrs: {
+                                              href: "",
+                                              title: "Eliminar Tiket"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                $event.preventDefault()
+                                                return _vm.deleteTiket(
+                                                  tiket,
+                                                  _vm.client
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "far fa-trash-alt"
+                                            })
+                                          ]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _vm._m(8, true)
+                                  ])
+                                }),
+                                0
+                              )
+                            ])
                           ])
-                        }),
-                        0
-                      )
-                    ])
+                        ])
                   ])
-                ])
-              ])
             ])
           : _vm._e()
       ])
@@ -41748,23 +41913,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "input-group mb-3" }, [
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", placeholder: "Agregar Tiket" }
-      }),
-      _vm._v(" "),
-      _c("div", { staticClass: "input-group-append" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn-sm btn-outline-secondary",
-            attrs: { type: "button", id: "addTiket", title: "Agregar Tiket" }
-          },
-          [_c("i", { staticClass: "fas fa-cart-plus" })]
-        )
-      ])
-    ])
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "alert",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
   },
   function() {
     var _vm = this
@@ -41775,6 +41935,36 @@ var staticRenderFns = [
       { staticClass: "spinner-grow", attrs: { role: "status" } },
       [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-append" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn-sm btn-outline-success",
+          attrs: { type: "submit", title: "Agregar Tiket" }
+        },
+        [_c("i", { staticClass: "fas fa-cart-plus" })]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-box-tool",
+          attrs: { type: "button", "data-widget": "dismiss" }
+        },
+        [_c("i", { staticClass: "fa fa-times" })]
+      )
+    ])
   },
   function() {
     var _vm = this

@@ -18,7 +18,7 @@ class TiketController extends Controller
     }
     public function getTikets($id)
     {
-        $tikets = Tiket::where('client_id', $id)->get();
+        $tikets = Tiket::where('client_id', $id)->orderBy('created_at', 'DESC')->get();
         return response()->json(["tikets"=>$tikets]);
     }
 
@@ -33,15 +33,14 @@ class TiketController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'amount' => 'required',
+        ]);
+        if (Tiket::create($request->all())) {
+            return;
+        }
     }
 
     /**

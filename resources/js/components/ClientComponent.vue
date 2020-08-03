@@ -43,49 +43,69 @@
                     <div class="card" v-for="(client, index) in clients" :key="index">
                         <h6 class="card-header"> {{client.name}} </h6>
                         <div class="card-body">
-                            <h5 class="card-title">Total: $ {{client.total}} </h5>
-                            <div class="input-group mb-3">
-
-                                <input type="text" class="form-control" placeholder="Agregar Tiket">
-                                <div class="input-group-append">
-                                    <button class="btn-sm btn-outline-secondary" type="button" id="addTiket" title="Agregar Tiket"><i class="fas fa-cart-plus"></i></button>
+                            <h5 class="card-title">Total: $ {{client.id}} </h5>
+                            <div class="input-group mb-3"></div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <button @click="getClient(client.id)" class="btn-sm btn-info"><i class="far fa-eye"></i></button>
                                 </div>
-
+                                <div class="col-md-4">
+                                    <button @click="deleteClient(client.id)" class="btn-sm btn-danger"><i class="far fa-trash-alt"></i></button>
+                                </div>
+                                <div class="col-md-4"></div>
                             </div>
-                            <button @click="getClient(client.id)" class="btn-sm btn-primary">Ver Detalle</button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-4" v-if="client">
-                <!-- <client-detail-component :client="client" :id="client.id"></client-detail-component> -->
-                <div class="card">
+                <div v-if="tikets.length <= 0" >
+                    <div class="alert alert-info" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <b>{{client.name}}</b>, no contiene tikets.
+                    </div>
+                </div>
+
+                <div class="card" v-else>
                     <div v-if="loading_tiket" class="container mx-auto text-center mt-5">
                         <div class="spinner-grow" role="status">
                             <span class="sr-only">Loading...</span>
                         </div>
                     </div>
-                        <!-- <h5 class="card-title" ></h5> -->
-                        <div class="row">
-                            <div class="container tikets">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                        <th colspan="3" v-text="client.name"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="icon-action-client">
-                                        <tr v-for="(tiket, index) in tikets" :key="index">
-                                            <td>{{tiket.amount}}</td>
-                                            <td class="icon-action-client" width="10px"><a href="" @click.prevent="deleteTiket(tiket, client)" title="Eliminar Tiket">
-                                                <i class="far fa-trash-alt"></i></a></td>
-                                            <td class="icon-action-client" width="10px" title="Editar Tiket"><a href=""><i class="fas fa-pen"></i></a></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                    <!-- TABLE TIKETS -->
+                    <div class="row" v-else>
+                        <div class="container tikets">
+
+                        <form v-on:submit.prevent="createTiket(client.id)" method="post">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Agregar Tiket" name="newAmount" v-model="newAmount">
+
+                                <div class="input-group-append">
+                                    <button class="btn-sm btn-outline-success" type="submit" title="Agregar Tiket"><i class="fas fa-cart-plus"></i></button>
+                                </div>
+                                <span v-for="error in errors" class="text-danger"> {{error}} </span>
                             </div>
+                        </form>
+
+                            <table class="table table-hover">
+                                <thead class="bg-light">
+                                    <tr>
+                                    <th colspan="2" v-text="client.name"></th>
+                                    <th><button type="button" class="btn btn-box-tool" data-widget="dismiss"><i class="fa fa-times"></i></button></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="icon-action-client">
+                                    <tr v-for="(tiket, index) in tikets" :key="index">
+                                        <td>$ {{tiket.amount}}</td>
+                                        <td class="icon-action-client" width="10px"><a href="" @click.prevent="deleteTiket(tiket, client)" title="Eliminar Tiket">
+                                            <i class="far fa-trash-alt"></i></a></td>
+                                        <td class="icon-action-client" width="10px" title="Editar Tiket"><a href=""><i class="fas fa-pen"></i></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
+                    <!-- END TABLE TIKETS -->
                 </div>
             </div>
         </div>
@@ -101,11 +121,12 @@
         data() {
             return {
                 clients: null,
-                tikets: null,
+                tikets: 0,
                 loading_clients: true,
                 loading_tiket: true,
                 client: null,
                 newClient: '',
+                newAmount: '',
                 errors: [],
             }
         },
@@ -123,10 +144,11 @@
                 axios.get(`getClient/${id}`).then(response => {
                     this.client = response.data.client;
                     this.getTikets(id);
+                    this.loading_client = false;
                 });
             },
             suma(ti){
-                console.log(ti);
+
             },
             getTikets(id) {
                 axios.get(`getTikets/${id}`).then(response => {
@@ -154,6 +176,26 @@
                     }
                 })
             },
+            deleteClient(client) {
+                Swal.fire({
+                title: 'Desea eliminar este cliente',
+                html:'<b><div class="text-danger">Se borraran todos los tikets <br/> </b>asociados a este cliente!</div>.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButton: 'btn-sm btn-success',
+                cancelButton: 'btn-sm btn-danger',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Si, borrar!'
+                }).then((result) => {
+                if (result.value) {
+                    axios.delete(`deleteClient/${client}`).then(response => {
+                        this.getClients();
+                        toastr.success('Cliente eliminado');
+                    })
+                    .catch(error => toastr.error('Sucedio algun error</b>!'))
+                    }
+                })
+            },
             createClient: function() {
                 var url = 'clients';
                 axios.post(url, {
@@ -166,7 +208,20 @@
                     toastr.success('Cliente Agregado');
                 }).catch(error => {
                     this.errors = error.response.data.errors.name
-                    console.log(this.errors.errors.name);
+                });
+            },
+            createTiket(client, newAmount) {
+                var url = 'tikets';
+                axios.post(url, {
+                    amount: this.newAmount,
+                    client_id: this.client.id,
+                }).then(response => {
+                    this.newAmount = '';
+                    this.errors = [];
+                    this.getTikets(client);
+                    toastr.success('Tiket Agregado');
+                }).catch(error => {
+                    this.errors = error.response.data.errors.amount
                 });
             },
         }

@@ -151,6 +151,7 @@ return [
         "title" => 'titulo',
         "img" => 'imágen',
         "name" => 'nombre',
+        "amount" => 'valor del tiket',
     ],
 
 ];

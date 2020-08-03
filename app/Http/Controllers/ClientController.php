@@ -79,14 +79,12 @@ class ClientController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Client  $client
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Client $client)
+    public function destroy($id)
     {
-        //
+        $client = Client::find($id);
+        if ($client->delete()) {
+            return response()->json(null, 204);
+        }
+        // return response()->json(null, 204);
     }
 }

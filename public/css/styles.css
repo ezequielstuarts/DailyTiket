@@ -1,3 +1,20 @@
 .tikets td {
     line-height: 12px;
 }
+
+.btn-box-tool {
+    padding: 0px;
+}
+
+.fa-times {
+    color: #9b9b9b;
+}
+
+.btn-box-tool:focus {
+    box-shadow: none;
+}
+
+.btn-box-tool .fa-times:hover {
+    font-weight: 900;
+    color: #000;
+}

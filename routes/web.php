@@ -28,7 +28,12 @@ Route::get('getClients', 'ClientController@getClients')->name('getClients');
 
 Route::post('clients', 'ClientController@store')->name('clients');
 
+Route::delete('deleteClient/{id}', 'ClientController@destroy');
+
 Route::get('getTikets/{id}', 'TiketController@getTikets');
+
+Route::post('tikets', 'TiketController@store')->name('tikets');
+
 Route::delete('deleteTiket/{id}', 'TiketController@destroy');
 
 // Route::get('home', 'HomeController@index')->name('home');
