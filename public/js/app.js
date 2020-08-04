@@ -62825,9 +62825,11 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _vm._l(_vm.errors, function(error) {
-                      return _c("span", { staticClass: "text-danger" }, [
-                        _vm._v(" " + _vm._s(error) + " ")
-                      ])
+                      return _c(
+                        "span",
+                        { key: error, staticClass: "text-danger" },
+                        [_vm._v(" " + _vm._s(error) + " ")]
+                      )
                     })
                   ],
                   2
@@ -62973,7 +62975,7 @@ var render = function() {
                             _vm._l(_vm.errors, function(error) {
                               return _c(
                                 "span",
-                                { staticClass: "text-danger" },
+                                { key: error, staticClass: "text-danger" },
                                 [_vm._v(" " + _vm._s(error) + " ")]
                               )
                             })
@@ -63064,7 +63066,10 @@ var render = function() {
                                     _vm._l(_vm.errors, function(error) {
                                       return _c(
                                         "span",
-                                        { staticClass: "text-danger" },
+                                        {
+                                          key: error,
+                                          staticClass: "text-danger"
+                                        },
                                         [_vm._v(" " + _vm._s(error) + " ")]
                                       )
                                     })

@@ -20,7 +20,7 @@
             <div class="modal-body">
                 <label for="name">Nombre del cliente</label>
                 <input type="text" name="name" class="form-control" v-model="newClient">
-                <span v-for="error in errors" class="text-danger"> {{error}} </span>
+                <span v-for="error in errors" :key="error" class="text-danger"> {{error}} </span>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -72,7 +72,7 @@
                                     <button class="btn btn-outline-success" type="button" disabled><span class="spinner-border spinner-border-sm success" role="status" aria-hidden="true"></span></button>
                                 </div>
 
-                                <span v-for="error in errors" class="text-danger"> {{error}} </span>
+                                <span v-for="error in errors" :key="error" class="text-danger"> {{error}} </span>
                             </div>
                         </form>
                 </div>
@@ -102,7 +102,7 @@
                                     <button class="btn btn-outline-success" type="button" disabled><span class="spinner-border spinner-border-sm success" role="status" aria-hidden="true"></span></button>
                                 </div>
 
-                                <span v-for="error in errors" class="text-danger"> {{error}} </span>
+                                <span v-for="error in errors" :key="error" class="text-danger"> {{error}} </span>
                             </div>
                         </form>
 

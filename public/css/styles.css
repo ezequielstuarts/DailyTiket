@@ -18,3 +18,13 @@
     font-weight: 900;
     color: #000;
 }
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: rgb(56, 193, 114);
+    /* border: none; */
+}
+
+button {
+    border: none!important;
+}
