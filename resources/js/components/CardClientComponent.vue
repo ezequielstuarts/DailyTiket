@@ -7,7 +7,7 @@
                 <div class="input-group mb-3">
                     <form v-on:submit.prevent="createTiket(client.id)" method="post">
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Agregar Tiket" name="newAmount" v-model="newAmount" v-focus>
+                            <input type="text" class="form-control" placeholder="Agregar Tiket" name="newAmount" v-model="newAmount">
 
                             <div v-if="!agregandoTiket" class="input-group-append">
                                 <button class="btn-sm btn-outline-success" type="submit" title="Agregar Tiket"><i class="fas fa-cart-plus"></i></button>
@@ -65,7 +65,7 @@
                 }).then(response => {
                     this.newAmount = '';
                     this.errors = [];
-                    this.$emit('getClient', this.client.id);
+                    this.getClient();
                     toastr.success('Tiket Agregado');
                     this.agregandoTiket = false;
                 }).catch(error => {

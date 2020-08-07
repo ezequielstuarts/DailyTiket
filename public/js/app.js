@@ -1985,7 +1985,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.newAmount = '';
         _this.errors = [];
 
-        _this.$emit('getClient', _this.client.id);
+        _this.getClient();
 
         toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Tiket Agregado');
         _this.agregandoTiket = false;
@@ -2263,12 +2263,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 
@@ -2278,13 +2272,15 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       errors: [],
-      editMode: false,
       agregandoTiket: false,
       newAmount: ''
     };
   },
   mounted: function mounted() {},
   methods: {
+    getTikets: function getTikets() {
+      this.$emit('getTikets', this.client.id);
+    },
     createTiket: function createTiket(client, newAmount) {
       var _this = this;
 
@@ -2297,7 +2293,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.newAmount = '';
         _this.errors = [];
 
-        _this.$emit('getClient', client.id);
+        _this.getTikets();
 
         toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Tiket Agregado');
         _this.agregandoTiket = false;
@@ -2305,32 +2301,6 @@ __webpack_require__.r(__webpack_exports__);
         _this.errors = error.response.data.errors.amount;
         _this.agregandoTiket = false;
       });
-    },
-    deleteTiket: function deleteTiket(tiket, client) {
-      var _this2 = this;
-
-      sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire({
-        title: '¿Desea eliminar este tiket?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#13b7da',
-        cancelButtonColor: '#d33',
-        cancelButtonText: 'Cancelar',
-        confirmButtonText: 'Si, borrar!'
-      }).then(function (result) {
-        if (result.value) {
-          axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]("deleteTiket/".concat(tiket.id)).then(function (response) {
-            _this2.$emit('getTikets', _this2.client.id);
-
-            toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Tiket eliminado');
-          })["catch"](function (error) {
-            return toastr__WEBPACK_IMPORTED_MODULE_1___default.a.error('Sucedio algun error</b>!');
-          });
-        }
-      });
-    },
-    editTiket: function editTiket() {
-      this.editMode = true;
     }
   }
 });
@@ -2365,6 +2335,123 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log('Component mounted.');
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TiketComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TiketComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_3__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['tiket', 'client'],
+  data: function data() {
+    return {
+      editMode: false,
+      actualizandoTiket: false,
+      errors: [],
+      amount: ''
+    };
+  },
+  mounted: function mounted() {
+    console.log('Component mounted.');
+  },
+  methods: {
+    editTiket: function editTiket() {
+      this.editMode = true;
+    },
+    // createTiket() {
+    //     this.editMode = true;
+    // },
+    cancel: function cancel() {
+      this.editMode = false;
+      this.errors = [];
+    },
+    deleteTiket: function deleteTiket(tiket, client) {
+      var _this = this;
+
+      sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire({
+        title: '¿Desea eliminar este tiket?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#13b7da',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, borrar!'
+      }).then(function (result) {
+        if (result.value) {
+          axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]("deleteTiket/".concat(tiket.id)).then(function (response) {
+            _this.$emit('getTikets', _this.client.id);
+
+            toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Tiket eliminado');
+          })["catch"](function (error) {
+            return toastr__WEBPACK_IMPORTED_MODULE_1___default.a.error('Sucedio algun error</b>!');
+          });
+        }
+      });
+    },
+    updateTiket: function updateTiket(tiketId) {
+      var _this2 = this;
+
+      this.actualizandoTiket = true;
+      var params = {
+        amount: this.tiket.amount
+      };
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("tikets/".concat(tiketId), params).then(function (response) {
+        _this2.$emit('getTikets', _this2.client.id);
+
+        toastr__WEBPACK_IMPORTED_MODULE_1___default.a.info('Tiket Actualizado');
+        _this2.editMode = false;
+      })["catch"](function (error) {
+        _this2.errors = error.response.data.errors.amount;
+        toastr__WEBPACK_IMPORTED_MODULE_1___default.a.error('Ocurrio algún error');
+        _this2.actualizandoTiket = false;
+      });
+    }
   }
 });
 
@@ -62861,8 +62948,7 @@ var render = function() {
                         rawName: "v-model",
                         value: _vm.newAmount,
                         expression: "newAmount"
-                      },
-                      { name: "focus", rawName: "v-focus" }
+                      }
                     ],
                     staticClass: "form-control",
                     attrs: {
@@ -63391,45 +63477,14 @@ var render = function() {
                       _c(
                         "tbody",
                         { staticClass: "icon-action-client" },
-                        _vm._l(_vm.tikets, function(tiket, index) {
-                          return _c("tr", { key: index }, [
-                            _vm.editMode
-                              ? _c("td", [_vm._v("INPUT")])
-                              : _c("td", [_vm._v("$ " + _vm._s(tiket.amount))]),
-                            _vm._v(" "),
-                            _c(
-                              "td",
-                              {
-                                staticClass: "icon-action-client",
-                                attrs: { width: "10px" }
-                              },
-                              [
-                                _c(
-                                  "a",
-                                  {
-                                    attrs: {
-                                      href: "",
-                                      title: "Eliminar Tiket"
-                                    },
-                                    on: {
-                                      click: function($event) {
-                                        $event.preventDefault()
-                                        return _vm.deleteTiket(
-                                          tiket,
-                                          _vm.client
-                                        )
-                                      }
-                                    }
-                                  },
-                                  [_c("i", { staticClass: "far fa-trash-alt" })]
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _vm._m(5, true)
-                          ])
+                        _vm._l(_vm.tikets, function(tiket) {
+                          return _c("tiket-component", {
+                            key: tiket.id,
+                            attrs: { tiket: tiket, client: _vm.client },
+                            on: { getTikets: _vm.getTikets }
+                          })
                         }),
-                        0
+                        1
                       )
                     ])
                   ])
@@ -63510,23 +63565,6 @@ var staticRenderFns = [
         })
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "td",
-      {
-        staticClass: "icon-action-client",
-        attrs: { width: "10px", title: "Editar Tiket" }
-      },
-      [
-        _c("a", { attrs: { href: "" } }, [
-          _c("i", { staticClass: "fas fa-pen" })
-        ])
-      ]
-    )
   }
 ]
 render._withStripped = true
@@ -63576,6 +63614,142 @@ var staticRenderFns = [
     ])
   }
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TiketComponent.vue?vue&type=template&id=10770c3a&":
+/*!*****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TiketComponent.vue?vue&type=template&id=10770c3a& ***!
+  \*****************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.editMode
+    ? _c("tr", [
+        _c(
+          "td",
+          [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.tiket.amount,
+                  expression: "tiket.amount"
+                },
+                { name: "focus", rawName: "v-focus" }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: _vm.tiket.amount },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.tiket, "amount", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _vm._l(_vm.errors, function(error) {
+              return _c("span", { key: error, staticClass: "text-danger" }, [
+                _vm._v(" " + _vm._s(error) + " ")
+              ])
+            })
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _vm.actualizandoTiket
+          ? _c("td", { attrs: { width: "10px" } }, [
+              _c("span", {
+                staticClass: "spinner-border spinner-border-sm",
+                attrs: { role: "status", "aria-hidden": "true" }
+              })
+            ])
+          : _c("td", { attrs: { width: "10px" } }, [
+              _c(
+                "a",
+                {
+                  staticClass: "icon-action-tiket",
+                  attrs: { href: "", title: "Guardar Cambios" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.updateTiket(_vm.tiket.id)
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fas fa-save" })]
+              )
+            ]),
+        _vm._v(" "),
+        _c("td", { attrs: { width: "10px", title: "Editar Tiket" } }, [
+          _c(
+            "a",
+            {
+              attrs: { href: "" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.cancel(_vm.tiket, _vm.client)
+                }
+              }
+            },
+            [_c("i", { staticClass: "fas fa-ban" })]
+          )
+        ])
+      ])
+    : _c("tr", [
+        _c("td", [_vm._v("$ " + _vm._s(_vm.tiket.amount))]),
+        _vm._v(" "),
+        _c("td", { attrs: { width: "10px", title: "Editar Tiket" } }, [
+          _c(
+            "a",
+            {
+              attrs: { href: "" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.editTiket(_vm.tiket, _vm.client)
+                }
+              }
+            },
+            [_c("i", { staticClass: "fas fa-pen" })]
+          )
+        ]),
+        _vm._v(" "),
+        _c("td", { attrs: { width: "10px" } }, [
+          _c(
+            "a",
+            {
+              staticClass: "icon-action-tiket",
+              attrs: { href: "", title: "Eliminar Tiket" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.deleteTiket(_vm.tiket, _vm.client)
+                }
+              }
+            },
+            [_c("i", { staticClass: "far fa-trash-alt" })]
+          )
+        ])
+      ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -75778,6 +75952,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
 Vue.component('client-component', __webpack_require__(/*! ./components/ClientComponent.vue */ "./resources/js/components/ClientComponent.vue")["default"]);
 Vue.component('card-client-component', __webpack_require__(/*! ./components/CardClientComponent.vue */ "./resources/js/components/CardClientComponent.vue")["default"]);
+Vue.component('tiket-component', __webpack_require__(/*! ./components/TiketComponent.vue */ "./resources/js/components/TiketComponent.vue")["default"]);
 Vue.component('client-detail-component', __webpack_require__(/*! ./components/ClientDetailComponent.vue */ "./resources/js/components/ClientDetailComponent.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -75978,15 +76153,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!***********************************************************!*\
   !*** ./resources/js/components/ClientDetailComponent.vue ***!
   \***********************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ClientDetailComponent_vue_vue_type_template_id_47c62af4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ClientDetailComponent.vue?vue&type=template&id=47c62af4& */ "./resources/js/components/ClientDetailComponent.vue?vue&type=template&id=47c62af4&");
 /* harmony import */ var _ClientDetailComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ClientDetailComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/ClientDetailComponent.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _ClientDetailComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _ClientDetailComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -76016,7 +76190,7 @@ component.options.__file = "resources/js/components/ClientDetailComponent.vue"
 /*!************************************************************************************!*\
   !*** ./resources/js/components/ClientDetailComponent.vue?vue&type=script&lang=js& ***!
   \************************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -76108,6 +76282,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/TiketComponent.vue":
+/*!****************************************************!*\
+  !*** ./resources/js/components/TiketComponent.vue ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _TiketComponent_vue_vue_type_template_id_10770c3a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TiketComponent.vue?vue&type=template&id=10770c3a& */ "./resources/js/components/TiketComponent.vue?vue&type=template&id=10770c3a&");
+/* harmony import */ var _TiketComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TiketComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/TiketComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _TiketComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _TiketComponent_vue_vue_type_template_id_10770c3a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _TiketComponent_vue_vue_type_template_id_10770c3a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/TiketComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/TiketComponent.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/TiketComponent.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TiketComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./TiketComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TiketComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TiketComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/TiketComponent.vue?vue&type=template&id=10770c3a&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/TiketComponent.vue?vue&type=template&id=10770c3a& ***!
+  \***********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TiketComponent_vue_vue_type_template_id_10770c3a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./TiketComponent.vue?vue&type=template&id=10770c3a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TiketComponent.vue?vue&type=template&id=10770c3a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TiketComponent_vue_vue_type_template_id_10770c3a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TiketComponent_vue_vue_type_template_id_10770c3a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

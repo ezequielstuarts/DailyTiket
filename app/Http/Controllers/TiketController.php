@@ -65,16 +65,14 @@ class TiketController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Tiket  $tiket
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Tiket $tiket)
+    public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'amount' => 'required|numeric|min:1|max:99999.99|regex:/^\d*(\.\d{2})?$/',
+        ]);
+        if(Tiket::find($id)->update($request->all())){
+            return;
+        }
     }
 
     /**

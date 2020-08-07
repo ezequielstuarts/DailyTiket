@@ -50,13 +50,7 @@
 
                     <table class="table table-hover">
                         <tbody class="icon-action-client">
-                            <tr v-for="(tiket, index) in tikets" :key="index">
-                                <td v-if="editMode" >INPUT</td>
-                                <td v-else>$ {{tiket.amount}}</td>
-                                <td class="icon-action-client" width="10px"><a href="" @click.prevent="deleteTiket(tiket, client)" title="Eliminar Tiket">
-                                    <i class="far fa-trash-alt"></i></a></td>
-                                <td class="icon-action-client" width="10px" title="Editar Tiket"><a href=""><i class="fas fa-pen"></i></a></td>
-                            </tr>
+                            <tiket-component v-for="tiket in tikets" :key="tiket.id" :tiket="tiket" :client="client" @getTikets="getTikets"></tiket-component>
                         </tbody>
                     </table>
                 </div>
@@ -76,7 +70,6 @@
         data() {
             return {
                 errors: [],
-                editMode: false,
                 agregandoTiket: false,
                 newAmount: '',
             };
@@ -84,6 +77,9 @@
         mounted() {
         },
         methods: {
+            getTikets() {
+                this.$emit('getTikets', this.client.id);
+            },
             createTiket(client, newAmount) {
                 this.agregandoTiket = true;
                 var url = 'tikets';
@@ -93,7 +89,7 @@
                 }).then(response => {
                     this.newAmount = '';
                     this.errors = [];
-                    this.$emit('getClient', client.id);
+                    this.getTikets();
                     toastr.success('Tiket Agregado');
                     this.agregandoTiket = false;
                 }).catch(error => {
@@ -101,28 +97,6 @@
                     this.agregandoTiket = false;
                 });
             },
-            deleteTiket(tiket, client) {
-                Swal.fire({
-                title: '¿Desea eliminar este tiket?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#13b7da',
-                cancelButtonColor: '#d33',
-                cancelButtonText: 'Cancelar',
-                confirmButtonText: 'Si, borrar!'
-                }).then((result) => {
-                if (result.value) {
-                    axios.delete(`deleteTiket/${tiket.id}`).then(response => {
-                        this.$emit('getTikets', this.client.id);
-                        toastr.success('Tiket eliminado');
-                    })
-                    .catch(error => toastr.error('Sucedio algun error</b>!'))
-                    }
-                })
-            },
-            editTiket() {
-                this.editMode = true;
-            }
         }
     }
 </script>

@@ -28,3 +28,16 @@
 button {
     border: none!important;
 }
+
+.table th,
+.table td {
+    vertical-align: inherit;
+}
+
+.icon-action-tiket .far.fa-trash-alt {
+    color: red;
+}
+
+.icon-action-tiket .fas.fa-save {
+    color: #38c172;
+}

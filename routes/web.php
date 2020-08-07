@@ -34,6 +34,8 @@ Route::get('getTikets/{id}', 'TiketController@getTikets');
 
 Route::post('tikets', 'TiketController@store')->name('tikets');
 
+Route::put('tikets/{id}', 'TiketController@update')->name('tikets');
+
 Route::delete('deleteTiket/{id}', 'TiketController@destroy');
 
 // Route::get('home', 'HomeController@index')->name('home');
