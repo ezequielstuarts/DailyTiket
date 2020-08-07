@@ -1899,6 +1899,107 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CardClientComponent.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CardClientComponent.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_3__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['client'],
+  data: function data() {
+    return {
+      newAmount: '',
+      newClient: '',
+      errors: [],
+      agregandoTiket: false
+    };
+  },
+  methods: {
+    getClient: function getClient() {
+      this.$emit('getClient', this.client.id);
+    },
+    deleteClient: function deleteClient() {
+      this.$emit('deleteClient', this.client.id);
+    },
+    createTiket: function createTiket(client, newAmount) {
+      var _this = this;
+
+      this.agregandoTiket = true;
+      var url = 'tikets';
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(url, {
+        amount: this.newAmount,
+        client_id: this.client.id
+      }).then(function (response) {
+        _this.newAmount = '';
+        _this.errors = [];
+
+        _this.$emit('getClient', _this.client.id);
+
+        toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Tiket Agregado');
+        _this.agregandoTiket = false;
+      })["catch"](function (error) {
+        _this.errors = error.response.data.errors.amount;
+        toastr__WEBPACK_IMPORTED_MODULE_1___default.a.error('Ocurrio algún error');
+        _this.agregandoTiket = false;
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ClientComponent.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ClientComponent.vue?vue&type=script&lang=js& ***!
@@ -1985,66 +2086,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -2061,12 +2102,9 @@ Vue.directive('focus', {
       tikets: 0,
       loading_clients: true,
       loading_tiket: true,
-      agregandoTiket: false,
       client: null,
       newClient: '',
-      newAmount: '',
-      errors: [],
-      editMode: false
+      errors: []
     };
   },
   mounted: function mounted() {
@@ -2092,52 +2130,16 @@ Vue.directive('focus', {
         _this2.loading_client = false;
       });
     },
-    sumarTikets: function sumarTikets(arrTikets) {
-      var total = 0;
-
-      for (var i = 0; i <= arrTikets.length; i++) {
-        ;
-      }
-
-      this.total += arrTikets[this.i];
-      console.log(this.total);
-      console.log('total = ' + total);
-    },
     getTikets: function getTikets(id) {
       var _this3 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("getTikets/".concat(id)).then(function (response) {
         _this3.tikets = response.data.tikets;
         _this3.loading_tiket = false;
-
-        _this3.sumarTikets(_this3.tikets);
-      });
-    },
-    deleteTiket: function deleteTiket(tiket, client) {
-      var _this4 = this;
-
-      sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire({
-        title: 'Desea eliminar este mensaje',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#13b7da',
-        cancelButtonColor: '#d33',
-        cancelButtonText: 'Cancelar',
-        confirmButtonText: 'Si, borrar!'
-      }).then(function (result) {
-        if (result.value) {
-          axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]("deleteTiket/".concat(tiket.id)).then(function (response) {
-            _this4.getTikets(client.id);
-
-            toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Tiket eliminado');
-          })["catch"](function (error) {
-            return toastr__WEBPACK_IMPORTED_MODULE_1___default.a.error('Sucedio algun error</b>!');
-          });
-        }
       });
     },
     deleteClient: function deleteClient(client) {
-      var _this5 = this;
+      var _this4 = this;
 
       sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire({
         title: 'Desea eliminar este cliente',
@@ -2151,7 +2153,7 @@ Vue.directive('focus', {
       }).then(function (result) {
         if (result.value) {
           axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]("deleteClient/".concat(client)).then(function (response) {
-            _this5.getClients();
+            _this4.getClients();
 
             toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Cliente eliminado');
           })["catch"](function (error) {
@@ -2161,45 +2163,21 @@ Vue.directive('focus', {
       });
     },
     createClient: function createClient() {
-      var _this6 = this;
+      var _this5 = this;
 
       var url = 'clients';
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(url, {
         name: this.newClient
       }).then(function (response) {
-        _this6.getClients();
+        _this5.getClients();
 
-        _this6.newClient = '';
-        _this6.errors = [];
+        _this5.newClient = '';
+        _this5.errors = [];
         $('#modalNewClient').modal('hide');
         toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Cliente Agregado');
       })["catch"](function (error) {
-        _this6.errors = error.response.data.errors.name;
+        _this5.errors = error.response.data.errors.name;
       });
-    },
-    createTiket: function createTiket(client, newAmount) {
-      var _this7 = this;
-
-      this.agregandoTiket = true;
-      var url = 'tikets';
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(url, {
-        amount: this.newAmount,
-        client_id: this.client.id
-      }).then(function (response) {
-        _this7.newAmount = '';
-        _this7.errors = [];
-
-        _this7.getTikets(client);
-
-        toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Tiket Agregado');
-        _this7.agregandoTiket = false;
-      })["catch"](function (error) {
-        _this7.errors = error.response.data.errors.amount;
-        _this7.agregandoTiket = false;
-      });
-    },
-    editTiket: function editTiket() {
-      this.editMode = true;
     }
   }
 });
@@ -2217,6 +2195,12 @@ Vue.directive('focus', {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_3__);
 //
 //
 //
@@ -2242,31 +2226,111 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['client'],
+  props: ['tikets', 'client', 'loading_tiket'],
   data: function data() {
     return {
-      client: {// name: '',
-        // id: '',
-      },
-      tikets: null,
-      loading_tiket: true // id = client.id,
-
+      errors: [],
+      editMode: false,
+      agregandoTiket: false,
+      newAmount: ''
     };
   },
-  mounted: function mounted() {
-    getTikets(5);
-  },
+  mounted: function mounted() {},
   methods: {
-    getTikets: function getTikets(id) {
+    createTiket: function createTiket(client, newAmount) {
       var _this = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("getTikets/".concat(client.id)).then(function (response) {
-        _this.tikets = response.data.tikets;
-        _this.loading_tiket = false;
-        console.log(_this.tikets);
+      this.agregandoTiket = true;
+      var url = 'tikets';
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(url, {
+        amount: this.newAmount,
+        client_id: this.client.id
+      }).then(function (response) {
+        _this.newAmount = '';
+        _this.errors = [];
+
+        _this.$emit('getClient', client.id);
+
+        toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Tiket Agregado');
+        _this.agregandoTiket = false;
+      })["catch"](function (error) {
+        _this.errors = error.response.data.errors.amount;
+        _this.agregandoTiket = false;
       });
+    },
+    deleteTiket: function deleteTiket(tiket, client) {
+      var _this2 = this;
+
+      sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire({
+        title: '¿Desea eliminar este tiket?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#13b7da',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, borrar!'
+      }).then(function (result) {
+        if (result.value) {
+          axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]("deleteTiket/".concat(tiket.id)).then(function (response) {
+            _this2.$emit('getTikets', _this2.client.id);
+
+            toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Tiket eliminado');
+          })["catch"](function (error) {
+            return toastr__WEBPACK_IMPORTED_MODULE_1___default.a.error('Sucedio algun error</b>!');
+          });
+        }
+      });
+    },
+    editTiket: function editTiket() {
+      this.editMode = true;
     }
   }
 });
@@ -62747,6 +62811,174 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CardClientComponent.vue?vue&type=template&id=770f8527&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CardClientComponent.vue?vue&type=template&id=770f8527& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "card" }, [
+      _c("h6", { staticClass: "card-header" }, [
+        _vm._v(" " + _vm._s(_vm.client.name) + " ")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c("h5", { staticClass: "card-title" }, [
+          _vm._v("Total: $ " + _vm._s(_vm.client.id) + " ")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "input-group mb-3" }, [
+          _c(
+            "form",
+            {
+              attrs: { method: "post" },
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.createTiket(_vm.client.id)
+                }
+              }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "input-group mb-3" },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.newAmount,
+                        expression: "newAmount"
+                      },
+                      { name: "focus", rawName: "v-focus" }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      placeholder: "Agregar Tiket",
+                      name: "newAmount"
+                    },
+                    domProps: { value: _vm.newAmount },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.newAmount = $event.target.value
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  !_vm.agregandoTiket
+                    ? _c("div", { staticClass: "input-group-append" }, [
+                        _vm._m(0)
+                      ])
+                    : _c("div", { staticClass: "input-group-append" }, [
+                        _vm._m(1)
+                      ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.errors, function(error) {
+                    return _c(
+                      "span",
+                      { key: error, staticClass: "text-danger" },
+                      [_vm._v(" " + _vm._s(error) + " ")]
+                    )
+                  })
+                ],
+                2
+              )
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-4" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn-sm btn-info",
+                on: {
+                  click: function($event) {
+                    return _vm.getClient(_vm.client.id)
+                  }
+                }
+              },
+              [_c("i", { staticClass: "far fa-eye" })]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-4" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn-sm btn-danger",
+                on: {
+                  click: function($event) {
+                    return _vm.deleteClient(_vm.client.id)
+                  }
+                }
+              },
+              [_c("i", { staticClass: "far fa-trash-alt" })]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-4" })
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn-sm btn-outline-success",
+        attrs: { type: "submit", title: "Agregar Tiket" }
+      },
+      [_c("i", { staticClass: "fas fa-cart-plus" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-outline-success",
+        attrs: { type: "button", disabled: "" }
+      },
+      [
+        _c("span", {
+          staticClass: "spinner-border spinner-border-sm success",
+          attrs: { role: "status", "aria-hidden": "true" }
+        })
+      ]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ClientComponent.vue?vue&type=template&id=778f3e52&":
 /*!******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ClientComponent.vue?vue&type=template&id=778f3e52& ***!
@@ -62855,283 +63087,37 @@ var render = function() {
           _c(
             "div",
             { staticClass: "card-columns" },
-            _vm._l(_vm.clients, function(client, index) {
-              return _c("div", { key: index, staticClass: "card" }, [
-                _c("h6", { staticClass: "card-header" }, [
-                  _vm._v(" " + _vm._s(client.name) + " ")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "card-body" }, [
-                  _c("h5", { staticClass: "card-title" }, [
-                    _vm._v("Total: $ " + _vm._s(client.id) + " ")
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "input-group mb-3" }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-md-4" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn-sm btn-info",
-                          on: {
-                            click: function($event) {
-                              return _vm.getClient(client.id)
-                            }
-                          }
-                        },
-                        [_c("i", { staticClass: "far fa-eye" })]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-4" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn-sm btn-danger",
-                          on: {
-                            click: function($event) {
-                              return _vm.deleteClient(client.id)
-                            }
-                          }
-                        },
-                        [_c("i", { staticClass: "far fa-trash-alt" })]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-4" })
-                  ])
-                ])
-              ])
+            _vm._l(_vm.clients, function(client) {
+              return _c("card-client-component", {
+                key: client.id,
+                attrs: { client: client },
+                on: {
+                  getClient: _vm.getClient,
+                  deleteClient: _vm.deleteClient,
+                  getTikets: _vm.getTikets
+                }
+              })
             }),
-            0
+            1
           )
         ]),
         _vm._v(" "),
         _vm.client
-          ? _c("div", { staticClass: "col-4" }, [
-              _vm.tikets.length <= 0
-                ? _c("div", [
-                    _c("h6", { staticClass: "card-header text-success mb-3" }, [
-                      _c("b", [_vm._v(_vm._s(_vm.client.name))]),
-                      _vm._v(", no contiene tikets. ")
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "form",
-                      {
-                        attrs: { method: "post" },
-                        on: {
-                          submit: function($event) {
-                            $event.preventDefault()
-                            return _vm.createTiket(_vm.client.id)
-                          }
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          { staticClass: "input-group mb-3" },
-                          [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.newAmount,
-                                  expression: "newAmount"
-                                },
-                                { name: "focus", rawName: "v-focus" }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "text",
-                                placeholder: "Agregar Tiket",
-                                name: "newAmount"
-                              },
-                              domProps: { value: _vm.newAmount },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.newAmount = $event.target.value
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            !_vm.agregandoTiket
-                              ? _c(
-                                  "div",
-                                  { staticClass: "input-group-append" },
-                                  [_vm._m(4)]
-                                )
-                              : _c(
-                                  "div",
-                                  { staticClass: "input-group-append" },
-                                  [_vm._m(5)]
-                                ),
-                            _vm._v(" "),
-                            _vm._l(_vm.errors, function(error) {
-                              return _c(
-                                "span",
-                                { key: error, staticClass: "text-danger" },
-                                [_vm._v(" " + _vm._s(error) + " ")]
-                              )
-                            })
-                          ],
-                          2
-                        )
-                      ]
-                    )
-                  ])
-                : _c("div", { staticClass: "card" }, [
-                    _vm.loading_tiket
-                      ? _c(
-                          "div",
-                          { staticClass: "container mx-auto text-center mt-5" },
-                          [_vm._m(6)]
-                        )
-                      : _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "container tikets" }, [
-                            _c("div", { staticClass: "card-header mb-3" }, [
-                              _c("p", { staticClass: "text-center" }, [
-                                _vm._v(_vm._s(_vm.client.name))
-                              ]),
-                              _vm._v(" "),
-                              _c("p", [
-                                _vm._v(
-                                  "Catidad de tikets: " +
-                                    _vm._s(_vm.tikets.length) +
-                                    " "
-                                )
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "form",
-                              {
-                                attrs: { method: "post" },
-                                on: {
-                                  submit: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.createTiket(_vm.client.id)
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "div",
-                                  { staticClass: "input-group mb-3" },
-                                  [
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: _vm.newAmount,
-                                          expression: "newAmount"
-                                        },
-                                        { name: "focus", rawName: "v-focus" }
-                                      ],
-                                      staticClass: "form-control",
-                                      attrs: {
-                                        type: "text",
-                                        placeholder: "Agregar Tiket",
-                                        name: "newAmount"
-                                      },
-                                      domProps: { value: _vm.newAmount },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.newAmount = $event.target.value
-                                        }
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    !_vm.agregandoTiket
-                                      ? _c(
-                                          "div",
-                                          { staticClass: "input-group-append" },
-                                          [_vm._m(7)]
-                                        )
-                                      : _c(
-                                          "div",
-                                          { staticClass: "input-group-append" },
-                                          [_vm._m(8)]
-                                        ),
-                                    _vm._v(" "),
-                                    _vm._l(_vm.errors, function(error) {
-                                      return _c(
-                                        "span",
-                                        {
-                                          key: error,
-                                          staticClass: "text-danger"
-                                        },
-                                        [_vm._v(" " + _vm._s(error) + " ")]
-                                      )
-                                    })
-                                  ],
-                                  2
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("table", { staticClass: "table table-hover" }, [
-                              _c(
-                                "tbody",
-                                { staticClass: "icon-action-client" },
-                                _vm._l(_vm.tikets, function(tiket, index) {
-                                  return _c("tr", { key: index }, [
-                                    _vm.editMode
-                                      ? _c("td", [_vm._v("INPUT")])
-                                      : _c("td", [
-                                          _vm._v("$ " + _vm._s(tiket.amount))
-                                        ]),
-                                    _vm._v(" "),
-                                    _c(
-                                      "td",
-                                      {
-                                        staticClass: "icon-action-client",
-                                        attrs: { width: "10px" }
-                                      },
-                                      [
-                                        _c(
-                                          "a",
-                                          {
-                                            attrs: {
-                                              href: "",
-                                              title: "Eliminar Tiket"
-                                            },
-                                            on: {
-                                              click: function($event) {
-                                                $event.preventDefault()
-                                                return _vm.deleteTiket(
-                                                  tiket,
-                                                  _vm.client
-                                                )
-                                              }
-                                            }
-                                          },
-                                          [
-                                            _c("i", {
-                                              staticClass: "far fa-trash-alt"
-                                            })
-                                          ]
-                                        )
-                                      ]
-                                    )
-                                  ])
-                                }),
-                                0
-                              )
-                            ])
-                          ])
-                        ])
-                  ])
-            ])
+          ? _c(
+              "div",
+              { staticClass: "col-4" },
+              [
+                _c("client-detail-component", {
+                  attrs: {
+                    tikets: _vm.tikets,
+                    client: _vm.client,
+                    loading_tiket: _vm.loading_tiket
+                  },
+                  on: { getTikets: _vm.getTikets }
+                })
+              ],
+              1
+            )
           : _vm._e()
       ])
     ])
@@ -63214,78 +63200,6 @@ var staticRenderFns = [
       { staticClass: "spinner-grow", attrs: { role: "status" } },
       [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "btn-sm btn-outline-success",
-        attrs: { type: "submit", title: "Agregar Tiket" }
-      },
-      [_c("i", { staticClass: "fas fa-cart-plus" })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "btn btn-outline-success",
-        attrs: { type: "button", disabled: "" }
-      },
-      [
-        _c("span", {
-          staticClass: "spinner-border spinner-border-sm success",
-          attrs: { role: "status", "aria-hidden": "true" }
-        })
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "spinner-grow", attrs: { role: "status" } },
-      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "btn-sm btn-outline-success",
-        attrs: { type: "submit", title: "Agregar Tiket" }
-      },
-      [_c("i", { staticClass: "fas fa-cart-plus" })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "btn btn-outline-success",
-        attrs: { type: "button", disabled: "" }
-      },
-      [
-        _c("span", {
-          staticClass: "spinner-border spinner-border-sm success",
-          attrs: { role: "status", "aria-hidden": "true" }
-        })
-      ]
-    )
   }
 ]
 render._withStripped = true
@@ -63311,34 +63225,216 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-header" }, [
-        _c("h4", { domProps: { textContent: _vm._s(_vm.client.name) } })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c("h5", { staticClass: "card-title" }),
-        _vm._v(" "),
-        _vm.loading_tiket
-          ? _c("div", { staticClass: "container mx-auto text-center mt-5" }, [
-              _vm._m(0)
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "tikets" },
-          _vm._l(_vm.tikets, function(tiket, index) {
-            return _c("ul", { key: index }, [
-              _c("li", [_vm._v(" " + _vm._s(tiket.amount) + " ")])
-            ])
-          }),
-          0
-        ),
-        _vm._v(" "),
-        _c("a", { staticClass: "btn btn-primary", attrs: { href: "#" } }, [
-          _vm._v("ClientDetail")
-        ])
-      ])
+      _vm.tikets.length <= 0
+        ? _c("div", [
+            _c("h6", { staticClass: "card-header text-success mb-3" }, [
+              _c("b", [_vm._v(_vm._s(_vm.client.name))]),
+              _vm._v(", no contiene tikets. ")
+            ]),
+            _vm._v(" "),
+            _c(
+              "form",
+              {
+                attrs: { method: "post" },
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.createTiket(_vm.client.id)
+                  }
+                }
+              },
+              [
+                _c(
+                  "div",
+                  { staticClass: "input-group mb-3" },
+                  [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.newAmount,
+                          expression: "newAmount"
+                        },
+                        { name: "focus", rawName: "v-focus" }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        placeholder: "Agregar Tiket",
+                        name: "newAmount"
+                      },
+                      domProps: { value: _vm.newAmount },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.newAmount = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    !_vm.agregandoTiket
+                      ? _c("div", { staticClass: "input-group-append" }, [
+                          _vm._m(0)
+                        ])
+                      : _c("div", { staticClass: "input-group-append" }, [
+                          _vm._m(1)
+                        ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.errors, function(error) {
+                      return _c(
+                        "span",
+                        { key: error, staticClass: "text-danger" },
+                        [_vm._v(" " + _vm._s(error) + " ")]
+                      )
+                    })
+                  ],
+                  2
+                )
+              ]
+            )
+          ])
+        : _c("div", { staticClass: "card" }, [
+            _vm.loading_tiket
+              ? _c(
+                  "div",
+                  { staticClass: "container mx-auto text-center mt-5" },
+                  [_vm._m(2)]
+                )
+              : _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "container tikets" }, [
+                    _c("div", { staticClass: "card-header mb-3" }, [
+                      _c("p", { staticClass: "text-center" }, [
+                        _vm._v(_vm._s(_vm.client.name))
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [
+                        _vm._v(
+                          "Cantidad de tikets: " +
+                            _vm._s(_vm.tikets.length) +
+                            " "
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "form",
+                      {
+                        attrs: { method: "post" },
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                            return _vm.createTiket(_vm.client.id)
+                          }
+                        }
+                      },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "input-group mb-3" },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.newAmount,
+                                  expression: "newAmount"
+                                },
+                                { name: "focus", rawName: "v-focus" }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "text",
+                                placeholder: "Agregar Tiket",
+                                name: "newAmount"
+                              },
+                              domProps: { value: _vm.newAmount },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.newAmount = $event.target.value
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            !_vm.agregandoTiket
+                              ? _c(
+                                  "div",
+                                  { staticClass: "input-group-append" },
+                                  [_vm._m(3)]
+                                )
+                              : _c(
+                                  "div",
+                                  { staticClass: "input-group-append" },
+                                  [_vm._m(4)]
+                                ),
+                            _vm._v(" "),
+                            _vm._l(_vm.errors, function(error) {
+                              return _c(
+                                "span",
+                                { key: error, staticClass: "text-danger" },
+                                [_vm._v(" " + _vm._s(error) + " ")]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("table", { staticClass: "table table-hover" }, [
+                      _c(
+                        "tbody",
+                        { staticClass: "icon-action-client" },
+                        _vm._l(_vm.tikets, function(tiket, index) {
+                          return _c("tr", { key: index }, [
+                            _vm.editMode
+                              ? _c("td", [_vm._v("INPUT")])
+                              : _c("td", [_vm._v("$ " + _vm._s(tiket.amount))]),
+                            _vm._v(" "),
+                            _c(
+                              "td",
+                              {
+                                staticClass: "icon-action-client",
+                                attrs: { width: "10px" }
+                              },
+                              [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: {
+                                      href: "",
+                                      title: "Eliminar Tiket"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        $event.preventDefault()
+                                        return _vm.deleteTiket(
+                                          tiket,
+                                          _vm.client
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_c("i", { staticClass: "far fa-trash-alt" })]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _vm._m(5, true)
+                          ])
+                        }),
+                        0
+                      )
+                    ])
+                  ])
+                ])
+          ])
     ])
   ])
 }
@@ -63348,9 +63444,88 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c(
+      "button",
+      {
+        staticClass: "btn-sm btn-outline-success",
+        attrs: { type: "submit", title: "Agregar Tiket" }
+      },
+      [_c("i", { staticClass: "fas fa-cart-plus" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-outline-success",
+        attrs: { type: "button", disabled: "" }
+      },
+      [
+        _c("span", {
+          staticClass: "spinner-border spinner-border-sm success",
+          attrs: { role: "status", "aria-hidden": "true" }
+        })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
       "div",
       { staticClass: "spinner-grow", attrs: { role: "status" } },
       [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn-sm btn-outline-success",
+        attrs: { type: "submit", title: "Agregar Tiket" }
+      },
+      [_c("i", { staticClass: "fas fa-cart-plus" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-outline-success",
+        attrs: { type: "button", disabled: "" }
+      },
+      [
+        _c("span", {
+          staticClass: "spinner-border spinner-border-sm success",
+          attrs: { role: "status", "aria-hidden": "true" }
+        })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "td",
+      {
+        staticClass: "icon-action-client",
+        attrs: { width: "10px", title: "Editar Tiket" }
+      },
+      [
+        _c("a", { attrs: { href: "" } }, [
+          _c("i", { staticClass: "fas fa-pen" })
+        ])
+      ]
     )
   }
 ]
@@ -75602,6 +75777,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
 Vue.component('client-component', __webpack_require__(/*! ./components/ClientComponent.vue */ "./resources/js/components/ClientComponent.vue")["default"]);
+Vue.component('card-client-component', __webpack_require__(/*! ./components/CardClientComponent.vue */ "./resources/js/components/CardClientComponent.vue")["default"]);
 Vue.component('client-detail-component', __webpack_require__(/*! ./components/ClientDetailComponent.vue */ "./resources/js/components/ClientDetailComponent.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -75657,6 +75833,75 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/CardClientComponent.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/CardClientComponent.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CardClientComponent_vue_vue_type_template_id_770f8527___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CardClientComponent.vue?vue&type=template&id=770f8527& */ "./resources/js/components/CardClientComponent.vue?vue&type=template&id=770f8527&");
+/* harmony import */ var _CardClientComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CardClientComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/CardClientComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CardClientComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CardClientComponent_vue_vue_type_template_id_770f8527___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CardClientComponent_vue_vue_type_template_id_770f8527___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/CardClientComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/CardClientComponent.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/CardClientComponent.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CardClientComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./CardClientComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CardClientComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CardClientComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/CardClientComponent.vue?vue&type=template&id=770f8527&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/CardClientComponent.vue?vue&type=template&id=770f8527& ***!
+  \****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CardClientComponent_vue_vue_type_template_id_770f8527___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./CardClientComponent.vue?vue&type=template&id=770f8527& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CardClientComponent.vue?vue&type=template&id=770f8527&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CardClientComponent_vue_vue_type_template_id_770f8527___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CardClientComponent_vue_vue_type_template_id_770f8527___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
@@ -75733,14 +75978,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!***********************************************************!*\
   !*** ./resources/js/components/ClientDetailComponent.vue ***!
   \***********************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ClientDetailComponent_vue_vue_type_template_id_47c62af4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ClientDetailComponent.vue?vue&type=template&id=47c62af4& */ "./resources/js/components/ClientDetailComponent.vue?vue&type=template&id=47c62af4&");
 /* harmony import */ var _ClientDetailComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ClientDetailComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/ClientDetailComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _ClientDetailComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _ClientDetailComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -75770,7 +76016,7 @@ component.options.__file = "resources/js/components/ClientDetailComponent.vue"
 /*!************************************************************************************!*\
   !*** ./resources/js/components/ClientDetailComponent.vue?vue&type=script&lang=js& ***!
   \************************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -40,7 +40,8 @@
                     </div>
                 </div>
                 <div class="card-columns">
-                    <div class="card" v-for="(client, index) in clients" :key="index">
+                    <card-client-component v-for="client in clients" :key="client.id" :client="client" @getClient="getClient" @deleteClient="deleteClient" @getTikets="getTikets"></card-client-component>
+                    <!-- <div class="card" v-for="(client, index) in clients" :key="index">
                         <h6 class="card-header"> {{client.name}} </h6>
                         <div class="card-body">
                             <h5 class="card-title">Total: $ {{client.id}} </h5>
@@ -55,72 +56,11 @@
                                 <div class="col-md-4"></div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="col-4" v-if="client">
-                <div v-if="tikets.length <= 0" >
-                    <h6 class="card-header text-success mb-3"><b>{{client.name}}</b>, no contiene tikets. </h6>
-                        <form v-on:submit.prevent="createTiket(client.id)" method="post">
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control" placeholder="Agregar Tiket" name="newAmount" v-model="newAmount" v-focus>
-
-                                <div v-if="!agregandoTiket" class="input-group-append">
-                                    <button class="btn-sm btn-outline-success" type="submit" title="Agregar Tiket"><i class="fas fa-cart-plus"></i></button>
-                                </div>
-                                <div v-else class="input-group-append">
-                                    <button class="btn btn-outline-success" type="button" disabled><span class="spinner-border spinner-border-sm success" role="status" aria-hidden="true"></span></button>
-                                </div>
-
-                                <span v-for="error in errors" :key="error" class="text-danger"> {{error}} </span>
-                            </div>
-                        </form>
-                </div>
-
-                <div class="card" v-else>
-                    <div v-if="loading_tiket" class="container mx-auto text-center mt-5">
-                        <div class="spinner-grow" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                    </div>
-                    <!-- TABLE TIKETS -->
-                    <div class="row" v-else>
-                        <div class="container tikets">
-                        <div class="card-header mb-3">
-                            <p class="text-center">{{client.name}}</p>
-                            <p>Catidad de tikets: {{tikets.length}} </p>
-                            </div>
-
-                        <form v-on:submit.prevent="createTiket(client.id)" method="post">
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control" placeholder="Agregar Tiket" name="newAmount" v-model="newAmount" v-focus>
-
-                                <div v-if="!agregandoTiket" class="input-group-append">
-                                    <button class="btn-sm btn-outline-success" type="submit" title="Agregar Tiket"><i class="fas fa-cart-plus"></i></button>
-                                </div>
-                                <div v-else class="input-group-append">
-                                    <button class="btn btn-outline-success" type="button" disabled><span class="spinner-border spinner-border-sm success" role="status" aria-hidden="true"></span></button>
-                                </div>
-
-                                <span v-for="error in errors" :key="error" class="text-danger"> {{error}} </span>
-                            </div>
-                        </form>
-
-                            <table class="table table-hover">
-                                <tbody class="icon-action-client">
-                                    <tr v-for="(tiket, index) in tikets" :key="index">
-                                        <td v-if="editMode" >INPUT</td>
-                                        <td v-else>$ {{tiket.amount}}</td>
-                                        <td class="icon-action-client" width="10px"><a href="" @click.prevent="deleteTiket(tiket, client)" title="Eliminar Tiket">
-                                            <i class="far fa-trash-alt"></i></a></td>
-                                        <!-- <td class="icon-action-client" width="10px" title="Editar Tiket"><a href=""><i class="fas fa-pen"></i></a></td> -->
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <!-- END TABLE TIKETS -->
-                </div>
+                <client-detail-component :tikets="tikets" :client="client"  :loading_tiket="loading_tiket" @getTikets="getTikets"></client-detail-component>
             </div>
         </div>
     </div>
@@ -135,7 +75,7 @@
     Vue.directive('focus', {
         inserted: function (el) {
             el.focus()
-            }
+        }
     });
     export default {
         data() {
@@ -144,12 +84,9 @@
                 tikets: 0,
                 loading_clients: true,
                 loading_tiket: true,
-                agregandoTiket: false,
                 client: null,
                 newClient: '',
-                newAmount: '',
                 errors: [],
-                editMode: false,
             }
         },
         mounted() {
@@ -169,38 +106,11 @@
                     this.loading_client = false;
                 });
             },
-            sumarTikets(arrTikets){
-                var total = 0;
-                for(let i = 0; i <= arrTikets.length; i++);
-                    this.total+=arrTikets[this.i];
-                    console.log(this.total);
-                    console.log('total = '+total);
-            },
             getTikets(id) {
                 axios.get(`getTikets/${id}`).then(response => {
                     this.tikets = response.data.tikets;
                     this.loading_tiket = false;
-                    this.sumarTikets(this.tikets);
                 });
-            },
-            deleteTiket(tiket, client) {
-                Swal.fire({
-                title: 'Desea eliminar este mensaje',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#13b7da',
-                cancelButtonColor: '#d33',
-                cancelButtonText: 'Cancelar',
-                confirmButtonText: 'Si, borrar!'
-                }).then((result) => {
-                if (result.value) {
-                    axios.delete(`deleteTiket/${tiket.id}`).then(response => {
-                        this.getTikets(client.id);
-                        toastr.success('Tiket eliminado');
-                    })
-                    .catch(error => toastr.error('Sucedio algun error</b>!'))
-                    }
-                })
             },
             deleteClient(client) {
                 Swal.fire({
@@ -236,26 +146,6 @@
                     this.errors = error.response.data.errors.name
                 });
             },
-            createTiket(client, newAmount) {
-                this.agregandoTiket = true;
-                var url = 'tikets';
-                axios.post(url, {
-                    amount: this.newAmount,
-                    client_id: this.client.id,
-                }).then(response => {
-                    this.newAmount = '';
-                    this.errors = [];
-                    this.getTikets(client);
-                    toastr.success('Tiket Agregado');
-                    this.agregandoTiket = false;
-                }).catch(error => {
-                    this.errors = error.response.data.errors.amount;
-                    this.agregandoTiket = false;
-                });
-            },
-            editTiket() {
-                this.editMode = true;
-            }
         }
     };
 </script>

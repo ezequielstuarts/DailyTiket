@@ -14,6 +14,7 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('client-component', require('./components/ClientComponent.vue').default);
+Vue.component('card-client-component', require('./components/CardClientComponent.vue').default);
 Vue.component('client-detail-component', require('./components/ClientDetailComponent.vue').default);
 
 /**
