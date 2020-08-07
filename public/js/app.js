@@ -63654,6 +63654,20 @@ var render = function() {
               attrs: { type: "text" },
               domProps: { value: _vm.tiket.amount },
               on: {
+                keyup: [
+                  function($event) {
+                    if (!$event.type.indexOf("key") && $event.keyCode !== 13) {
+                      return null
+                    }
+                    return _vm.updateTiket(_vm.tiket.id)
+                  },
+                  function($event) {
+                    if (!$event.type.indexOf("key") && $event.keyCode !== 27) {
+                      return null
+                    }
+                    return _vm.cancel()
+                  }
+                ],
                 input: function($event) {
                   if ($event.target.composing) {
                     return
@@ -63696,7 +63710,7 @@ var render = function() {
               )
             ]),
         _vm._v(" "),
-        _c("td", { attrs: { width: "10px", title: "Editar Tiket" } }, [
+        _c("td", { attrs: { width: "10px", title: "Cancelar (ESC)" } }, [
           _c(
             "a",
             {

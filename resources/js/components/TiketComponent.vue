@@ -1,7 +1,7 @@
 <template>
         <tr v-if="editMode">
             <td>
-                <input type="text" class="form-control" v-model="tiket.amount" v-focus>
+                <input type="text" class="form-control" v-model="tiket.amount" v-focus v-on:keyup.13="updateTiket(tiket.id)" v-on:keyup.27="cancel()">
                     <span v-for="error in errors" :key="error" class="text-danger"> {{error}} </span>
             </td>
             <td v-if="actualizandoTiket" width="10px">
@@ -12,7 +12,7 @@
                 <i class="fas fa-save"></i></a>
             </td>
 
-            <td width="10px" title="Editar Tiket"><a href="" @click.prevent="cancel(tiket, client)"><i class="fas fa-ban"></i></a></td>
+            <td width="10px" title="Cancelar (ESC)"><a href="" @click.prevent="cancel(tiket, client)"><i class="fas fa-ban"></i></a></td>
         </tr>
 
         <tr v-else>
