@@ -18,8 +18,12 @@
         <tr v-else>
             <td>$ {{tiket.amount}}</td>
             <td width="10px" title="Editar Tiket"><a href="" @click.prevent="editTiket(tiket, client)"><i class="fas fa-pen"></i></a></td>
-            <td width="10px"><a class="icon-action-tiket" href="" @click.prevent="deleteTiket(tiket, client)" title="Eliminar Tiket">
-                <i class="far fa-trash-alt"></i></a></td>
+            <td v-if="!deleting_tiket" width="10px"><a class="icon-action-tiket" href="" @click.prevent="deleteTiket(tiket, client)" title="Eliminar Tiket"><i class="far fa-trash-alt"></i></a>
+            </td>
+            <td v-else width="10px"><div class="spinner-border text-danger spinner-grow-sm" role="status">
+                <span class="sr-only">Loading...</span></div>
+            </td>
+
         </tr>
 
 </template>
@@ -35,12 +39,10 @@
             return {
                 editMode: false,
                 actualizandoTiket: false,
+                deleting_tiket: false,
                 errors: [],
                 amount: '',
             }
-        },
-        mounted() {
-            console.log('Component mounted.');
         },
         methods: {
             editTiket() {
@@ -64,9 +66,11 @@
                 confirmButtonText: 'Si, borrar!'
                 }).then((result) => {
                 if (result.value) {
+                    this.deleting_tiket = true;
                     axios.delete(`deleteTiket/${tiket.id}`).then(response => {
                         this.$emit('getTikets', this.client.id);
                         toastr.success('Tiket eliminado');
+                        this.deleting_tiket = false;
                     })
                     .catch(error => toastr.error('Sucedio algun error</b>!'))
                     }

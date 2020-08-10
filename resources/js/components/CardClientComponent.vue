@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="card">
-            <h6 class="card-header"> {{client.name}} </h6>
+            <a href="#" @click.prevent="getClient(client.id)"><h5 class="card-header"> {{client.name}} </h5></a>
             <div class="card-body">
                 <h5 class="card-title">Total: $ {{client.id}} </h5>
                 <div class="input-group mb-3">
@@ -40,7 +40,7 @@
     import Swal from 'sweetalert2';
     import moment from 'moment';
     export default {
-    props:['client'],
+    props:['client', 'loading_tikets'],
         data() {
             return {
                 newAmount: '',
@@ -70,7 +70,6 @@
                     this.agregandoTiket = false;
                 }).catch(error => {
                     this.errors = error.response.data.errors.amount;
-                    toastr.error('Ocurrio algún error');
                     this.agregandoTiket = false;
                 });
             },

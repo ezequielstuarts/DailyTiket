@@ -13,25 +13,25 @@
                     <div v-else class="input-group-append">
                         <button class="btn btn-outline-success" type="button" disabled><span class="spinner-border spinner-border-sm success" role="status" aria-hidden="true"></span></button>
                     </div>
-
-                    <span v-for="error in errors" :key="error" class="text-danger"> {{error}} </span>
                 </div>
+                <span v-for="error in errors" :key="error" class="text-danger"> {{error}} </span>
             </form>
         </div>
 
         <div class="card" v-else>
-            <div v-if="loading_tiket" class="container mx-auto text-center mt-5">
-                <div class="spinner-grow" role="status">
-                    <span class="sr-only">Loading...</span>
-                </div>
-            </div>
             <!-- TABLE TIKETS -->
-            <div class="row" v-else>
+            <div class="row">
                 <div class="container tikets">
                 <div class="card-header mb-3">
-                    <p class="text-center">{{client.name}}</p>
-                    <p>Cantidad de tikets: {{tikets.length}} </p>
+                    <div v-if="loading_tikets" class="mx-auto text-center">
+                        <div class="spinner-border spinner-border-sm" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
                     </div>
+                    <h2 v-else class="text-center">{{client.name}}</h2>
+                    <h3>Total $: <span> <b class="text-danger">{{totalTikets}}</b></span> </h3>
+                    <p>Cantidad de tikets: {{tikets.length}} </p>
+                </div>
 
                 <form v-on:submit.prevent="createTiket(client.id)" method="post">
                     <div class="input-group mb-3">
@@ -44,8 +44,8 @@
                             <button class="btn btn-outline-success" type="button" disabled><span class="spinner-border spinner-border-sm success" role="status" aria-hidden="true"></span></button>
                         </div>
 
-                        <span v-for="error in errors" :key="error" class="text-danger"> {{error}} </span>
                     </div>
+                        <span v-for="error in errors" :key="error" class="text-danger"> {{error}} </span>
                 </form>
 
                     <table class="table table-hover">
@@ -66,7 +66,7 @@
     import Swal from 'sweetalert2';
     import moment from 'moment';
     export default {
-        props: ['tikets','client', 'loading_tiket'],
+        props: ['tikets','client', 'loading_tikets', 'totalTikets'],
         data() {
             return {
                 errors: [],
@@ -89,8 +89,8 @@
                 }).then(response => {
                     this.newAmount = '';
                     this.errors = [];
-                    this.getTikets();
                     toastr.success('Tiket Agregado');
+                    this.getTikets();
                     this.agregandoTiket = false;
                 }).catch(error => {
                     this.errors = error.response.data.errors.amount;
