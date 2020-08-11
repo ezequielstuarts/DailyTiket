@@ -1,4 +1,4 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+<p align="center"><img src="http://dailytiket.ezequielstuarts.com.ar/images/dt.png" width="250"></p>
 
 <!-- <p align="center">
 <a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
@@ -12,6 +12,15 @@
 Plataforma creada para manejo de tikets de ventas diarias o mensuales. <br/>
 En ella podes cargar tus clientes y a esos clientes les podes cargar sus tikes de cada compra realizada, para que al final del dia o mes, tengas la lista de todos los tikets.
 
+## Tecnologías
+
+- Laravel
+- XAMPP, servidor local
+- Base de datos: MySQL (Local y remota)
+- VueJs
+
+## Acceso al sitio de prueba
+http://dailytiket.ezequielstuarts.com.ar/
 
 ## License
 

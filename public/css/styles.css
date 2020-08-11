@@ -41,3 +41,7 @@ button {
 .icon-action-tiket .fas.fa-save {
     color: #38c172;
 }
+
+.navbar-brand img {
+    width: 30px;
+}
