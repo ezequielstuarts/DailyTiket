@@ -1,3 +1,9 @@
+body {
+    background: rgb(131, 58, 180);
+    background: linear-gradient(350deg, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 49%, rgba(252, 176, 69, 1) 100%);
+    min-height: 1000px;
+}
+
 .tikets td {
     line-height: 12px;
 }
@@ -21,7 +27,13 @@
 
 .form-control:focus {
     box-shadow: none;
-    border-color: rgb(56, 193, 114);
+    border-color: #18bc9c;
+    /* border: none; */
+}
+
+.form-control-no-tikets:focus {
+    box-shadow: none;
+    border-color: #3498db;
     /* border: none; */
 }
 
@@ -39,9 +51,25 @@ button {
 }
 
 .icon-action-tiket .fas.fa-save {
-    color: #38c172;
+    color: #18bc9c;
 }
 
-.navbar-brand img {
-    width: 30px;
+.navbar {
+    opacity: 0.8;
+}
+
+main {
+    margin-top: 70px;
+}
+
+.card {
+    border: none;
+}
+
+.card-success {
+    border-top: 2px solid #18bc9c;
+}
+
+.card-info {
+    border-top: 2px solid #3498db;
 }

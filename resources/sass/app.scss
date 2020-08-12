@@ -1,8 +1,11 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 // Variables
-@import 'variables';
+// @import 'variables';
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+// @import '~bootstrap/scss/bootstrap';
+@import "~bootswatch/dist/flatly/_variables";
+@import "~bootstrap/scss/bootstrap";
+@import "~bootswatch/dist/flatly/_bootswatch";
 @import "toastr";
 @import '~sweetalert2/src/sweetalert2';

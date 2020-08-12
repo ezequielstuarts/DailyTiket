@@ -2,7 +2,7 @@
 <template>
 <div>
     <div class="row">
-        <div class="container-fluid">
+        <div class="container">
             <a href="#" class="btn btn-primary float-right mb-3" data-toggle="modal" data-target="#modalNewClient"><i class="fas fa-plus"></i> Nuevo Cliente</a>
         </div>
     </div>
@@ -45,7 +45,7 @@
                 <div class="card-columns">
                     <card-client-component
                         v-for="client in clients" :key="client.id"
-                        :client="client"
+                        :client="client" :totalTikets="totalTikets"
                         :loading_tikets="loading_tikets"
                         @deleteClient="deleteClient"
                         @getTikets="getTikets"
@@ -54,7 +54,13 @@
                 </div>
             </div>
             <div class="col-4" v-if="client">
-                <client-detail-component :tikets="tikets" :totalTikets="totalTikets" :client="client"  :loading_tikets="loading_tikets" @getTikets="getTikets"></client-detail-component>
+                <client-detail-component
+                :tikets="tikets"
+                :client="client"
+                :lastTiket="lastTiket"
+                :totalTikets="totalTikets"
+                :loading_tikets="loading_tikets"
+                @getTikets="getTikets"></client-detail-component>
             </div>
         </div>
     </div>
@@ -77,6 +83,7 @@
                 clients: null,
                 tikets: 0,
                 totalTikets: 0,
+                lastTiket: '',
                 loading_clients: false,
                 loading_tikets: false,
                 saving_client: false,
@@ -102,7 +109,6 @@
                 axios.get(`getClient/${id}`).then(response => {
                     this.client = response.data.client;
                     this.getTikets(id);
-
                 });
             },
             getTikets(id) {
@@ -111,6 +117,7 @@
                 axios.get(`getTikets/${id}`).then(response => {
                     this.tikets = response.data.tikets;
                     this.totalTikets = response.data.totalTikets;
+                    this.lastTiket = response.data.lastTiket;
                     this.loading_tikets = false;
                 });
             },

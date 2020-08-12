@@ -1,9 +1,9 @@
 <template>
     <div>
-        <div class="card">
-            <a href="#" @click.prevent="getClient(client.id)"><h5 class="card-header"> {{client.name}} </h5></a>
+        <div class="card card-success">
+            <a href="#" @click.prevent="getClient(client.id)"><h5 class="card-header"> {{client.name}}</h5> </a>
             <div class="card-body">
-                <h5 class="card-title">Total: $ {{client.id}} </h5>
+                <!-- <h5 class="card-title">Total: $ {{totalTikets}} </h5> -->
                 <div class="input-group mb-3">
                     <form v-on:submit.prevent="createTiket(client.id)" method="post">
                         <div class="input-group mb-3">
@@ -21,10 +21,10 @@
                     </form>
                 </div>
                 <div class="row">
-                    <div class="col-md-4">
-                        <button @click="getClient(client.id)" class="btn-sm btn-info"><i class="far fa-eye"></i></button>
+                    <div class="col-md-6">
+                        <button @click="getClient(client.id)" class="btn-sm btn-primary"><i class="far fa-eye"></i></button>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <button @click="deleteClient(client.id)" class="btn-sm btn-danger"><i class="far fa-trash-alt"></i></button>
                     </div>
                     <div class="col-md-4"></div>
@@ -40,7 +40,7 @@
     import Swal from 'sweetalert2';
     import moment from 'moment';
     export default {
-    props:['client', 'loading_tikets'],
+    props:['client', 'loading_tikets', 'totalTikets'],
         data() {
             return {
                 newAmount: '',
