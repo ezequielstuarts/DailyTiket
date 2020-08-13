@@ -7,7 +7,11 @@
                         <h5 class="text-info"><b>{{client.name}}</b>, no contiene tikets.</h5>
                     </div>
                     <div class="container">
-                        <form v-on:submit.prevent="createTiket(client.id)" method="post">
+                        <form-add-tiket-component class="mb-3 mt-3"
+                            :client="client"
+                            @getClient="getClient">
+                        </form-add-tiket-component>
+                        <!-- <form v-on:submit.prevent="createTiket(client.id)" method="post">
                             <div class="input-group mb-3 mt-3">
                                 <input type="text" class="form-control form-control-no-tikets" placeholder="Agregar Tiket" name="newAmount" v-model="newAmount" v-focus>
 
@@ -19,7 +23,7 @@
                                 </div>
                             </div>
                             <span v-for="error in errors" :key="error" class="text-danger"> {{error}} </span>
-                        </form>
+                        </form> -->
                     </div>
             </div>
 
@@ -43,7 +47,11 @@
                         <button class="btn btn-sm btn-primary">Imprimir</button>
                         </div>
                         <div class="container">
-                            <form v-on:submit.prevent="createTiket(client.id)" method="post">
+                            <form-add-tiket-component class="mb-3 mt-3"
+                            :client="client"
+                            @getClient="getClient">
+                            </form-add-tiket-component>
+                            <!-- <form v-on:submit.prevent="createTiket(client.id)" method="post">
                                 <div class="input-group mb-3 mt-3">
                                     <input type="text" class="form-control" placeholder="Agregar Tiket" name="newAmount" v-model="newAmount" v-focus>
 
@@ -56,7 +64,7 @@
 
                                 </div>
                                     <span v-for="error in errors" :key="error" class="text-danger"> {{error}} </span>
-                            </form>
+                            </form> -->
                         </div>
                     </div>
 
@@ -96,6 +104,9 @@
         methods: {
             getTikets() {
                 this.$emit('getTikets', this.client.id);
+            },
+            getClient() {
+                this.$emit('getClient', this.client.id);
             },
             createTiket(client, newAmount) {
                 this.agregandoTiket = true;
