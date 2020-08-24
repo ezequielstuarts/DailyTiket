@@ -22,7 +22,7 @@
                 <span v-for="error in errors" :key="error" class="text-danger"> {{error}} </span>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                 <button v-if="!saving_client" type="submit" class="btn btn-primary">Guardar</button>
 
                 <button v-else class="btn btn-primary" type="button" disabled>

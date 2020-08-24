@@ -60,8 +60,8 @@
                 title: '¿Desea eliminar este tiket?',
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#13b7da',
-                cancelButtonColor: '#d33',
+                confirmButtonColor: '#2c3e50',
+                cancelButtonColor: '#e74c3c',
                 cancelButtonText: 'Cancelar',
                 confirmButtonText: 'Si, borrar!'
                 }).then((result) => {

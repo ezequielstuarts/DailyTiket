@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Client;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -54,6 +55,22 @@ class ClientController extends Controller
     {
         $client = Client::find($id);
         return response()->json(["client" => $client]);
+    }
+
+    public function print($id)
+    {
+        $client = Client::find($id);
+        $tikets = $client->tikets;
+        $Cantidadtikets = count($client->tikets);
+
+        $total = 0;
+        for ($i=0; $i < count($tikets) ; $i++) {
+            $total = $total+$tikets[$i]->amount;
+        };
+        $pdf = PDF::loadView('impresion.tikets', ["client" => $client, 'total' => $total, 'Cantidadtikets' => $Cantidadtikets]);
+        return $pdf->stream();
+        // return response()->json(["client" => $client]);
+        // return View('impresion.tikets', ["client" => $client]);
     }
 
     /**

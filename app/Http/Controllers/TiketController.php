@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Tiket;
+use App\Client;
 use Illuminate\Http\Request;
 
 class TiketController extends Controller
@@ -27,16 +28,6 @@ class TiketController extends Controller
     }
 
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -45,28 +36,6 @@ class TiketController extends Controller
         if (Tiket::create($request->all())) {
             return;
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Tiket  $tiket
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Tiket $tiket)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Tiket  $tiket
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Tiket $tiket)
-    {
-        //
     }
 
     public function update(Request $request, $id)
@@ -91,5 +60,12 @@ class TiketController extends Controller
         if ($tiket->delete()) {
             return response()->json(null, 204);
         }
+    }
+
+    public function deleteAllTikets($clientId)
+    {
+        $client = Client::find($clientId);
+        Tiket::delete('client_id', $clientId);
+        return response()->json(null, 204);
     }
 }

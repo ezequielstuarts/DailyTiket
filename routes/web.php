@@ -38,8 +38,18 @@ Route::put('tikets/{id}', 'TiketController@update')->name('tikets');
 
 Route::delete('deleteTiket/{id}', 'TiketController@destroy');
 
+Route::delete('deleteAllTikets/{clientId}', 'TiketController@deleteAllTikets');
+
 // Route::get('home', 'HomeController@index')->name('home');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/imprimir/{id}', 'ClientController@print')->name('print');
+
+Route::get('/pdf', function() {
+$pdf = PDF::loadView('impresion.tiket');
+return $pdf->stream();
+});
+
+

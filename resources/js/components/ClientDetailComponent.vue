@@ -11,24 +11,10 @@
                             :client="client"
                             @getClient="getClient">
                         </form-add-tiket-component>
-                        <!-- <form v-on:submit.prevent="createTiket(client.id)" method="post">
-                            <div class="input-group mb-3 mt-3">
-                                <input type="text" class="form-control form-control-no-tikets" placeholder="Agregar Tiket" name="newAmount" v-model="newAmount" v-focus>
-
-                                <div v-if="!agregandoTiket" class="input-group-append">
-                                    <button class="btn-sm btn-outline-success" type="submit" title="Agregar Tiket"><i class="fas fa-cart-plus"></i></button>
-                                </div>
-                                <div v-else class="input-group-append">
-                                    <button class="btn btn-outline-success" type="button" disabled><span class="spinner-border spinner-border-sm success" role="status" aria-hidden="true"></span></button>
-                                </div>
-                            </div>
-                            <span v-for="error in errors" :key="error" class="text-danger"> {{error}} </span>
-                        </form> -->
                     </div>
             </div>
 
             <div v-else>
-                <!-- TABLE TIKETS -->
                 <div class="row">
                     <div class="container tikets">
                     <div class="card card-success">
@@ -42,29 +28,15 @@
                         <h5>Total $: <span> <b class="text-danger">{{totalTikets}}</b></span> </h5>
                         <p>Cantidad de tikets: {{tikets.length}} </p>
                         <!-- <p class="card-text"><small class="text-muted">Último Tiket: {{lastTiket}} </small></p> -->
-                        <button class="btn btn-sm btn-primary">Eliminar Tikets</button>
-                        <button class="btn btn-sm btn-primary">PDF</button>
-                        <button class="btn btn-sm btn-primary">Imprimir</button>
+                        <button @click="deleteAllTikets(client)" class="btn btn-sm btn-primary">Eliminar Tikets</button>
+                        <!-- <button class="btn btn-sm btn-primary">PDF</button> -->
+                        <!-- <button @click="imprimir(client.id)" class="btn btn-sm btn-primary">Imprimir</button> -->
                         </div>
                         <div class="container">
                             <form-add-tiket-component class="mb-3 mt-3"
                             :client="client"
                             @getClient="getClient">
                             </form-add-tiket-component>
-                            <!-- <form v-on:submit.prevent="createTiket(client.id)" method="post">
-                                <div class="input-group mb-3 mt-3">
-                                    <input type="text" class="form-control" placeholder="Agregar Tiket" name="newAmount" v-model="newAmount" v-focus>
-
-                                    <div v-if="!agregandoTiket" class="input-group-append">
-                                        <button class="btn-sm btn-outline-success" type="submit" title="Agregar Tiket"><i class="fas fa-cart-plus"></i></button>
-                                    </div>
-                                    <div v-else class="input-group-append">
-                                        <button class="btn btn-outline-success" type="button" disabled><span class="spinner-border spinner-border-sm success" role="status" aria-hidden="true"></span></button>
-                                    </div>
-
-                                </div>
-                                    <span v-for="error in errors" :key="error" class="text-danger"> {{error}} </span>
-                            </form> -->
                         </div>
                     </div>
 
@@ -125,6 +97,32 @@
                     this.agregandoTiket = false;
                 });
             },
+            imprimir() {
+                let url = `/imprimir/${this.client.id}`;
+                console.log('imprimiendo');
+                window.location.href = url;
+            },
+            deleteAllTikets(client) {
+                Swal.fire({
+                title: '¿Desea eliminar todos los tikets de este cliente?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#2c3e50',
+                cancelButtonColor: '#e74c3c',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Si, borrar todos!'
+                }).then((result) => {
+                if (result.value) {
+                    // this.deleting_tiket = true;
+                    axios.delete(`deleteAllTikets/${client.id}`).then(response => {
+                        // this.$emit('getTikets', this.client.id);
+                        toastr.success('Tikets eliminado');
+                        // this.deleting_tiket = false;
+                    })
+                    .catch(error => toastr.error('Sucedio algun error</b>!'))
+                    }
+                })
+            }
         }
     }
 </script>

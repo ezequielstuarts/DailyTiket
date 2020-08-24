@@ -2299,34 +2299,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -2367,6 +2339,32 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         _this.errors = error.response.data.errors.amount;
         _this.agregandoTiket = false;
+      });
+    },
+    imprimir: function imprimir() {
+      var url = "/imprimir/".concat(this.client.id);
+      console.log('imprimiendo');
+      window.location.href = url;
+    },
+    deleteAllTikets: function deleteAllTikets(client) {
+      sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire({
+        title: '¿Desea eliminar todos los tikets de este cliente?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#2c3e50',
+        cancelButtonColor: '#e74c3c',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, borrar todos!'
+      }).then(function (result) {
+        if (result.value) {
+          // this.deleting_tiket = true;
+          axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]("deleteAllTikets/".concat(client.id)).then(function (response) {
+            // this.$emit('getTikets', this.client.id);
+            toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Tikets eliminado'); // this.deleting_tiket = false;
+          })["catch"](function (error) {
+            return toastr__WEBPACK_IMPORTED_MODULE_1___default.a.error('Sucedio algun error</b>!');
+          });
+        }
       });
     }
   }
@@ -2558,8 +2556,8 @@ __webpack_require__.r(__webpack_exports__);
         title: '¿Desea eliminar este tiket?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#13b7da',
-        cancelButtonColor: '#d33',
+        confirmButtonColor: '#2c3e50',
+        cancelButtonColor: '#e74c3c',
         cancelButtonText: 'Cancelar',
         confirmButtonText: 'Si, borrar!'
       }).then(function (result) {
@@ -63136,7 +63134,7 @@ var render = function() {
                       staticClass: "btn btn-secondary",
                       attrs: { type: "button", "data-dismiss": "modal" }
                     },
-                    [_vm._v("Close")]
+                    [_vm._v("Cancelar")]
                   ),
                   _vm._v(" "),
                   !_vm.saving_client
@@ -63487,17 +63485,18 @@ var render = function() {
                         )
                       ]),
                       _vm._v(" "),
-                      _c("button", { staticClass: "btn btn-sm btn-primary" }, [
-                        _vm._v("Eliminar Tikets")
-                      ]),
-                      _vm._v(" "),
-                      _c("button", { staticClass: "btn btn-sm btn-primary" }, [
-                        _vm._v("PDF")
-                      ]),
-                      _vm._v(" "),
-                      _c("button", { staticClass: "btn btn-sm btn-primary" }, [
-                        _vm._v("Imprimir")
-                      ])
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-sm btn-primary",
+                          on: {
+                            click: function($event) {
+                              return _vm.deleteAllTikets(_vm.client)
+                            }
+                          }
+                        },
+                        [_vm._v("Eliminar Tikets")]
+                      )
                     ]),
                     _vm._v(" "),
                     _c(
