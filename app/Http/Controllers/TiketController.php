@@ -20,11 +20,11 @@ class TiketController extends Controller
     public function getTikets($id)
     {
         $tikets = Tiket::where('client_id', $id)->orderBy('created_at', 'DESC')->get();
-        $totalTikets = 0;
+        $totalAmount = 0;
         foreach($tikets as $tiket) {
-            $totalTikets = $totalTikets+$tiket->amount;
+            $totalAmount = $totalAmount+$tiket->amount;
         };
-        return response()->json(['tikets' => $tikets, 'totalTikets' => $totalTikets]);
+        return response()->json(['tikets' => $tikets, 'totalAmount' => $totalAmount]);
     }
 
 

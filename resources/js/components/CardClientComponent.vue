@@ -29,7 +29,7 @@
     import Swal from 'sweetalert2';
     import moment from 'moment';
     export default {
-    props:['client', 'loading_tikets', 'totalTikets'],
+    props:['client', 'loading_tikets', 'totalAmount'],
         data() {
             return {
                 newAmount: '',

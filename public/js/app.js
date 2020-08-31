@@ -2046,7 +2046,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['client', 'loading_tikets', 'totalTikets'],
+  props: ['client', 'loading_tikets', 'totalAmount'],
   data: function data() {
     return {
       newAmount: '',
@@ -2162,7 +2162,7 @@ Vue.directive('focus', {
     return {
       clients: null,
       tikets: 0,
-      totalTikets: 0,
+      totalAmount: 0,
       lastTiket: '',
       loading_clients: false,
       loading_client: false,
@@ -2206,8 +2206,7 @@ Vue.directive('focus', {
       this.errors = [];
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("getTikets/".concat(id)).then(function (response) {
         _this3.tikets = response.data.tikets;
-        console.log(_this3.tikets);
-        _this3.totalTikets = response.data.totalTikets;
+        _this3.totalAmount = response.data.totalAmount;
         _this3.lastTiket = response.data.lastTiket;
         _this3.loading_tikets = false;
       });
@@ -2306,7 +2305,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['tikets', 'client', 'loading_tikets', 'totalTikets'],
+  props: ['tikets', 'client', 'loading_tikets', 'totalAmount'],
   data: function data() {
     return {
       errors: [],
@@ -2444,7 +2443,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['client', 'loading_tikets', 'totalTikets'],
+  props: ['client', 'loading_tikets', 'totalAmount'],
   data: function data() {
     return {
       newAmount: '',
@@ -63349,7 +63348,7 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "container-fluid" }, [
         _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-8" }, [
+          _c("div", { staticClass: "col-md-8 col-6" }, [
             _vm.loading_clients
               ? _c(
                   "div",
@@ -63367,7 +63366,7 @@ var render = function() {
                   staticClass: "animate__animated animate__fadeIn",
                   attrs: {
                     client: client,
-                    totalTikets: _vm.totalTikets,
+                    totalAmount: _vm.totalAmount,
                     loading_tikets: _vm.loading_tikets
                   },
                   on: {
@@ -63384,14 +63383,14 @@ var render = function() {
           _vm.client
             ? _c(
                 "div",
-                { staticClass: "col-4" },
+                { staticClass: "col-md-4 col-6" },
                 [
                   _c("client-detail-component", {
                     attrs: {
                       tikets: _vm.tikets,
                       client: _vm.client,
                       lastTiket: _vm.lastTiket,
-                      totalTikets: _vm.totalTikets,
+                      totalAmount: _vm.totalAmount,
                       loading_tikets: _vm.loading_tikets
                     },
                     on: { getTikets: _vm.getTikets, getClient: _vm.getClient }
@@ -63486,7 +63485,7 @@ var render = function() {
                           _vm._v("Total $: "),
                           _c("span", [
                             _c("b", { staticClass: "text-danger" }, [
-                              _vm._v(_vm._s(_vm.totalTikets))
+                              _vm._v(_vm._s(_vm.totalAmount))
                             ])
                           ])
                         ]),

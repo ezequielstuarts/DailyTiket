@@ -25,7 +25,7 @@
                         </div>
                         <h4 v-else class="text-center">{{client.name}}</h4>
                         <hr>
-                        <h5>Total $: <span> <b class="text-danger">{{totalTikets}}</b></span> </h5>
+                        <h5>Total $: <span> <b class="text-danger">{{totalAmount}}</b></span> </h5>
                         <p>Cantidad de tikets: {{tikets.length}} </p>
                         <!-- <p class="card-text"><small class="text-muted">Último Tiket: {{lastTiket}} </small></p> -->
 
@@ -67,7 +67,7 @@
     import Swal from 'sweetalert2';
     import moment from 'moment';
     export default {
-        props: ['tikets','client', 'loading_tikets', 'totalTikets'],
+        props: ['tikets','client', 'loading_tikets', 'totalAmount'],
         data() {
             return {
                 errors: [],

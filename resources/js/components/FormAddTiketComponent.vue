@@ -18,7 +18,7 @@
  import axios from 'axios';
     import toastr from 'toastr';
     export default {
-    props:['client', 'loading_tikets', 'totalTikets'],
+    props:['client', 'loading_tikets', 'totalAmount'],
         data() {
             return {
                 newAmount: '',

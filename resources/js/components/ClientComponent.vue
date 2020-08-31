@@ -7,7 +7,7 @@
     </add-client-component>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-8">
+            <div class="col-md-8 col-6">
                 <div v-if="loading_clients" class="container mx-auto text-center mt-5">
                     <div class="spinner-border" role="status"><span class="sr-only">Loading...</span>
                     </div>
@@ -15,7 +15,7 @@
                 <div class="card-columns">
                     <card-client-component class="animate__animated animate__fadeIn"
                         v-for="client in clients" :key="client.id"
-                        :client="client" :totalTikets="totalTikets"
+                        :client="client" :totalAmount="totalAmount"
                         :loading_tikets="loading_tikets"
                         @getTikets="getTikets"
                         @getClient="getClient"
@@ -23,7 +23,7 @@
                     </card-client-component>
                 </div>
             </div>
-            <div class="col-4" v-if="client">
+            <div class="col-md-4 col-6" v-if="client">
                 <!-- <div v-if="loading_client">
                     <div class="spinner-border mx-auto text-center" style="display: inherit;" role="status"><span class="sr-only">Loading...</span></div>
                 </div> -->
@@ -31,7 +31,7 @@
                     :tikets="tikets"
                     :client="client"
                     :lastTiket="lastTiket"
-                    :totalTikets="totalTikets"
+                    :totalAmount="totalAmount"
                     :loading_tikets="loading_tikets"
                     @getTikets="getTikets"
                     @getClient="getClient">
@@ -56,7 +56,7 @@
             return {
                 clients: null,
                 tikets: 0,
-                totalTikets: 0,
+                totalAmount: 0,
                 lastTiket: '',
                 loading_clients: false,
                 loading_client: false,
@@ -92,8 +92,7 @@
                 this.errors = [];
                 axios.get(`getTikets/${id}`).then(response => {
                     this.tikets = response.data.tikets;
-                    console.log(this.tikets);
-                    this.totalTikets = response.data.totalTikets;
+                    this.totalAmount = response.data.totalAmount;
                     this.lastTiket = response.data.lastTiket;
                     this.loading_tikets = false;
                 });
