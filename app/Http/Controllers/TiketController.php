@@ -62,10 +62,10 @@ class TiketController extends Controller
         }
     }
 
-    public function deleteAllTikets($clientId)
+    public function deleteAllTikets($id)
     {
-        $client = Client::find($clientId);
-        Tiket::delete('client_id', $clientId);
+        $client = Client::find($id);
+        $tikets = $client->tikets()->delete();
         return response()->json(null, 204);
     }
 }

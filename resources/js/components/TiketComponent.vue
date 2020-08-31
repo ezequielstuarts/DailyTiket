@@ -12,13 +12,16 @@
                 <i class="fas fa-save"></i></a>
             </td>
 
-            <td width="10px" title="Cancelar (ESC)"><a href="" @click.prevent="cancel(tiket, client)"><i class="fas fa-ban"></i></a></td>
+            <td width="10px" title="Cancelar (ESC)"><a href=""
+            @click.prevent="cancel(tiket, client)"><i class="fas fa-ban"></i></a>
+            </td>
         </tr>
 
         <tr v-else>
             <td>$ {{tiket.amount}}</td>
+
             <td width="10px" title="Editar Tiket"><a href="" @click.prevent="editTiket(tiket, client)"><i class="fas fa-pen"></i></a></td>
-            <td v-if="!deleting_tiket" width="10px"><a class="icon-action-tiket" href="" @click.prevent="deleteTiket(tiket, client)" title="Eliminar Tiket"><i class="far fa-trash-alt"></i></a>
+            <td v-if="!deleting_tiket" width="10px"><a class="icon-action-tiket " href="" @click.prevent="deleteTiket(tiket, client)" title="Eliminar Tiket"><i class="far fa-trash-alt"></i></a>
             </td>
             <td v-else width="10px"><div class="spinner-border text-danger spinner-grow-sm" role="status">
                 <span class="sr-only">Loading...</span></div>
@@ -32,7 +35,7 @@
     import axios from 'axios';
     import toastr from 'toastr';
     import Swal from 'sweetalert2';
-    import moment from 'moment';
+    import VueMoment from 'vue-moment';
     export default {
         props:['tiket', 'client'],
         data(){

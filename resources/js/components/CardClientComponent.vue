@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="card card-success">
-            <a href="#" @click.prevent="getClient(client.id)"><h5 class="card-header"> {{client.name}}</h5> </a>
+            <a href="#" @click.prevent="getClient(client.id)"><h5 class="card-header"> {{client.name}}</h5></a>
             <div class="card-body">
                 <div class="input-group mb-3">
                     <form-add-tiket-component

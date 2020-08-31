@@ -9,12 +9,11 @@
         <div class="row">
             <div class="col-8">
                 <div v-if="loading_clients" class="container mx-auto text-center mt-5">
-                    <div class="spinner-grow" role="status">
-                        <span class="sr-only">Loading...</span>
+                    <div class="spinner-border" role="status"><span class="sr-only">Loading...</span>
                     </div>
                 </div>
                 <div class="card-columns">
-                    <card-client-component
+                    <card-client-component class="animate__animated animate__fadeIn"
                         v-for="client in clients" :key="client.id"
                         :client="client" :totalTikets="totalTikets"
                         :loading_tikets="loading_tikets"
@@ -47,7 +46,6 @@
     import axios from 'axios';
     import toastr from 'toastr';
     import Swal from 'sweetalert2';
-    import moment from 'moment';
     Vue.directive('focus', {
         inserted: function (el) {
             el.focus()
@@ -74,10 +72,10 @@
         methods: {
             getClients: function() {
                 this.errors = [];
-                // this.loading_clients = true;
+                this.loading_clients = true;
                 axios.get('getClients').then(response => {
                     this.clients = response.data.clients;
-                    // this.loading_clients = false;
+                    this.loading_clients = false;
                 });
             },
             getClient(id) {
@@ -94,6 +92,7 @@
                 this.errors = [];
                 axios.get(`getTikets/${id}`).then(response => {
                     this.tikets = response.data.tikets;
+                    console.log(this.tikets);
                     this.totalTikets = response.data.totalTikets;
                     this.lastTiket = response.data.lastTiket;
                     this.loading_tikets = false;

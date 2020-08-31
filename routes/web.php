@@ -38,9 +38,7 @@ Route::put('tikets/{id}', 'TiketController@update')->name('tikets');
 
 Route::delete('deleteTiket/{id}', 'TiketController@destroy');
 
-Route::delete('deleteAllTikets/{clientId}', 'TiketController@deleteAllTikets');
-
-// Route::get('home', 'HomeController@index')->name('home');
+Route::delete('deleteAllTikets/{id}', 'TiketController@deleteAllTikets');
 
 Auth::routes();
 

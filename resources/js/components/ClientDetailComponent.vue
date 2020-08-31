@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div class="card card-tikets">
+    <div class="card card-tikets animate__animated animate__fadeIn">
             <div class="ard" >
                 <div class="card-info" v-if="tikets.length <= 0">
                     <div class="card-header">
@@ -28,7 +28,11 @@
                         <h5>Total $: <span> <b class="text-danger">{{totalTikets}}</b></span> </h5>
                         <p>Cantidad de tikets: {{tikets.length}} </p>
                         <!-- <p class="card-text"><small class="text-muted">Último Tiket: {{lastTiket}} </small></p> -->
-                        <button @click="deleteAllTikets(client)" class="btn btn-sm btn-primary">Eliminar Tikets</button>
+
+                        <button v-if="!deleting_tiket" @click="deleteAllTikets(client)" class="btn btn-sm btn-primary">Eliminar Tikets</button>
+
+                        <button v-else class="btn btn-primary" type="button" disabled> <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Eliminando...</button>
+
                         <!-- <button class="btn btn-sm btn-primary">PDF</button> -->
                         <!-- <button @click="imprimir(client.id)" class="btn btn-sm btn-primary">Imprimir</button> -->
                         </div>
@@ -69,6 +73,7 @@
                 errors: [],
                 agregandoTiket: false,
                 newAmount: '',
+                deleting_tiket: false,
             };
         },
         mounted() {
@@ -113,11 +118,11 @@
                 confirmButtonText: 'Si, borrar todos!'
                 }).then((result) => {
                 if (result.value) {
-                    // this.deleting_tiket = true;
+                    this.deleting_tiket = true;
                     axios.delete(`deleteAllTikets/${client.id}`).then(response => {
-                        // this.$emit('getTikets', this.client.id);
+                        this.$emit('getTikets', this.client.id);
                         toastr.success('Tikets eliminado');
-                        // this.deleting_tiket = false;
+                        this.deleting_tiket = false;
                     })
                     .catch(error => toastr.error('Sucedio algun error</b>!'))
                     }
