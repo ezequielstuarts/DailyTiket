@@ -19,14 +19,12 @@
 
         <tr v-else>
             <td>$ {{tiket.amount}}</td>
-
             <td width="10px" title="Editar Tiket"><a href="" @click.prevent="editTiket(tiket, client)"><i class="fas fa-pen"></i></a></td>
             <td v-if="!deleting_tiket" width="10px"><a class="icon-action-tiket " href="" @click.prevent="deleteTiket(tiket, client)" title="Eliminar Tiket"><i class="far fa-trash-alt"></i></a>
             </td>
             <td v-else width="10px"><div class="spinner-border text-danger spinner-grow-sm" role="status">
-                <span class="sr-only">Loading...</span></div>
+            </div>
             </td>
-
         </tr>
 
 </template>
@@ -37,7 +35,7 @@
     import Swal from 'sweetalert2';
     import VueMoment from 'vue-moment';
     export default {
-        props:['tiket', 'client'],
+        props:['tiket', 'client', 'loading_tikets'],
         data(){
             return {
                 editMode: false,
@@ -51,12 +49,10 @@
             editTiket() {
                 this.editMode = true;
             },
-            // createTiket() {
-            //     this.editMode = true;
-            // },
             cancel() {
                 this.editMode = false;
                 this.errors = [];
+                this.$emit('getTikets', this.client.id);
             },
             deleteTiket(tiket, client) {
                 Swal.fire({
@@ -88,6 +84,7 @@
                     this.$emit('getTikets', this.client.id);
                     toastr.info('Tiket Actualizado');
                     this.editMode = false;
+                    this.actualizandoTiket = false;
                 }).catch(error => {
                     this.errors = error.response.data.errors.amount;
                     toastr.error('Ocurrio algún error');

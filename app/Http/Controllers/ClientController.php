@@ -61,16 +61,16 @@ class ClientController extends Controller
     {
         $client = Client::find($id);
         $tikets = $client->tikets;
-        $Cantidadtikets = count($client->tikets);
+        $cantidadtikets = count($client->tikets);
 
         $total = 0;
         for ($i=0; $i < count($tikets) ; $i++) {
             $total = $total+$tikets[$i]->amount;
         };
-        $pdf = PDF::loadView('impresion.tikets', ["client" => $client, 'total' => $total, 'Cantidadtikets' => $Cantidadtikets]);
-        return $pdf->stream();
+        $pdf = PDF::loadView('impresion.tikets', ["client" => $client, 'total' => $total, 'cantidadtikets' => $cantidadtikets]);
+        return $pdf->download('listr.pdf');
         // return response()->json(["client" => $client]);
-        // return View('impresion.tikets', ["client" => $client]);
+        // return View('impresion.tikets', ["client" => $client, 'total' => $total, 'cantidadtikets' => $cantidadtikets]);
     }
 
     /**

@@ -2476,6 +2476,9 @@ __webpack_require__.r(__webpack_exports__);
         toastr__WEBPACK_IMPORTED_MODULE_1___default.a.error(error.response.data.errors.amount);
         _this.agregandoTiket = false;
       });
+    },
+    cancel: function cancel() {
+      this.newAmount = '';
     }
   }
 });
@@ -2530,14 +2533,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['tiket', 'client'],
+  props: ['tiket', 'client', 'loading_tikets'],
   data: function data() {
     return {
       editMode: false,
@@ -2551,12 +2552,10 @@ __webpack_require__.r(__webpack_exports__);
     editTiket: function editTiket() {
       this.editMode = true;
     },
-    // createTiket() {
-    //     this.editMode = true;
-    // },
     cancel: function cancel() {
       this.editMode = false;
       this.errors = [];
+      this.$emit('getTikets', this.client.id);
     },
     deleteTiket: function deleteTiket(tiket, client) {
       var _this = this;
@@ -2595,6 +2594,7 @@ __webpack_require__.r(__webpack_exports__);
 
         toastr__WEBPACK_IMPORTED_MODULE_1___default.a.info('Tiket Actualizado');
         _this2.editMode = false;
+        _this2.actualizandoTiket = false;
       })["catch"](function (error) {
         _this2.errors = error.response.data.errors.amount;
         toastr__WEBPACK_IMPORTED_MODULE_1___default.a.error('Ocurrio algún error');
@@ -63528,7 +63528,20 @@ var render = function() {
                                 }),
                                 _vm._v(" Eliminando...")
                               ]
-                            )
+                            ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-sm btn-primary",
+                            on: {
+                              click: function($event) {
+                                return _vm.imprimir(_vm.client.id)
+                              }
+                            }
+                          },
+                          [_vm._v("Imprimir")]
+                        )
                       ]),
                       _vm._v(" "),
                       _c(
@@ -63663,37 +63676,51 @@ var render = function() {
         }
       },
       [
-        _c("div", { staticClass: "input-group" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.newAmount,
-                expression: "newAmount"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: {
-              type: "text",
-              placeholder: "Agregar Tiket",
-              name: "newAmount"
-            },
-            domProps: { value: _vm.newAmount },
+        _c(
+          "div",
+          {
+            staticClass: "input-group",
             on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+              keyup: function($event) {
+                if (!$event.type.indexOf("key") && $event.keyCode !== 27) {
+                  return null
                 }
-                _vm.newAmount = $event.target.value
+                return _vm.cancel()
               }
             }
-          }),
-          _vm._v(" "),
-          !_vm.agregandoTiket
-            ? _c("div", { staticClass: "input-group-append" }, [_vm._m(0)])
-            : _c("div", { staticClass: "input-group-append" }, [_vm._m(1)])
-        ])
+          },
+          [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.newAmount,
+                  expression: "newAmount"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: {
+                type: "text",
+                placeholder: "Agregar Tiket",
+                name: "newAmount"
+              },
+              domProps: { value: _vm.newAmount },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.newAmount = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            !_vm.agregandoTiket
+              ? _c("div", { staticClass: "input-group-append" }, [_vm._m(0)])
+              : _c("div", { staticClass: "input-group-append" }, [_vm._m(1)])
+          ]
+        )
       ]
     )
   ])
@@ -63879,24 +63906,15 @@ var render = function() {
                 [_c("i", { staticClass: "far fa-trash-alt" })]
               )
             ])
-          : _c("td", { attrs: { width: "10px" } }, [_vm._m(0)])
+          : _c("td", { attrs: { width: "10px" } }, [
+              _c("div", {
+                staticClass: "spinner-border text-danger spinner-grow-sm",
+                attrs: { role: "status" }
+              })
+            ])
       ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "spinner-border text-danger spinner-grow-sm",
-        attrs: { role: "status" }
-      },
-      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -81468,8 +81486,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\Eze\DailyTiket\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\Eze\DailyTiket\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\DailyTiket\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\DailyTiket\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

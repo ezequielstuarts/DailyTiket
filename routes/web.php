@@ -46,7 +46,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/imprimir/{id}', 'ClientController@print')->name('print');
 
 Route::get('/pdf', function() {
-$pdf = PDF::loadView('impresion.tiket');
+$pdf = PDF::loadView('impresion.tikets');
 return $pdf->stream();
 });
 

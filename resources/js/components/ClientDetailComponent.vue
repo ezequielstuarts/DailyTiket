@@ -34,7 +34,7 @@
                         <button v-else class="btn btn-primary" type="button" disabled> <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Eliminando...</button>
 
                         <!-- <button class="btn btn-sm btn-primary">PDF</button> -->
-                        <!-- <button @click="imprimir(client.id)" class="btn btn-sm btn-primary">Imprimir</button> -->
+                        <button @click="imprimir(client.id)" class="btn btn-sm btn-primary">Imprimir</button>
                         </div>
                         <div class="container">
                             <form-add-tiket-component class="mb-3 mt-3"

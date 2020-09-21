@@ -21,7 +21,7 @@
     </div>
 
     <div class="row">
-        <h4>Tikets generados: {{$Cantidadtikets}} | Total: $ {{$total}} </h4>
+        <h4>Tikets generados: {{$cantidadtikets}} | Total: $ {{$total}} </h4>
         <table class="table-bordered"  style="width:300px">
             <thead>
               <tr>
@@ -41,6 +41,6 @@
             </tbody>
           </table>
         </div>
-        <p>Fin de listado. {{$Cantidadtikets}} Tikets | Total: $ {{$total}}</p>
+        <p>Fin de listado. {{$cantidadtikets}} Tikets | Total: $ {{$total}}</p>
 </body>
 </html>
