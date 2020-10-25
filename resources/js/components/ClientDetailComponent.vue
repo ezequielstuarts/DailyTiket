@@ -1,7 +1,7 @@
 <template>
 <div>
     <div class="card card-tikets animate__animated animate__fadeIn">
-            <div class="ard" >
+            <div>
                 <div class="card-info" v-if="tikets.length <= 0">
                     <div class="card-header">
                         <h5 class="text-info"><b>{{client.name}}</b>, no contiene tikets.</h5>
@@ -45,7 +45,7 @@
                     </div>
 
                         <table class="table table-hover">
-                            <tbody class="icon-action-client">
+                            <tbody class="icon-action-client animate__animated animate__fadeIn">
                                 <tiket-component v-for="tiket in tikets" :key="tiket.id"
                                 :tiket="tiket"
                                 :client="client"

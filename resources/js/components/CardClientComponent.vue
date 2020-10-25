@@ -1,22 +1,20 @@
 <template>
-    <div>
+    <div class="col-12">
         <div class="card card-success">
             <a href="#" @click.prevent="getClient(client.id)"><h5 class="card-header"> {{client.name}}</h5></a>
             <div class="card-body">
-                <div class="input-group mb-3">
+                <div class="mb-3">
                     <form-add-tiket-component
                         :client="client"
                         @getClient="getClient">
                     </form-add-tiket-component>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
-                        <button @click="getClient(client.id)" class="btn-sm btn-primary"><i class="far fa-eye"></i></button>
-                    </div>
-                    <div class="col-md-6">
+                    <div class="col-12">
+                        <button @click="getClient(client.id)" class="btn-sm btn-primary mr-2"><i class="far fa-eye"></i></button>
+                        <button @click="getClient(client.id)" class="btn-sm btn-primary mr-2"><i class="far fa-eye"></i> Detalle completo</button>
                         <button @click="deleteClient(client.id)" class="btn-sm btn-danger"><i class="far fa-trash-alt"></i></button>
                     </div>
-                    <div class="col-md-4"></div>
                 </div>
             </div>
         </div>
