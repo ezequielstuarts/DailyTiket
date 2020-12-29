@@ -12,6 +12,28 @@
 Plataforma creada para manejo de tikets de ventas diarias o mensuales. <br/>
 En ella podes cargar tus clientes y a esos clientes les podes cargar sus tikes de cada compra realizada, para que al final del dia o mes, tengas la lista de todos los tikets.
 
+## Instalacion
+~~~
+composer update
+~~~
+~~~
+npm install
+~~~
+~~~
+npm run dev
+~~~
+~~~
+php artisan migrate
+~~~
+Opcional
+~~~
+php artisan db:seed
+~~~
+Puesta en marcha
+~~~
+php artisan serv
+~~~
+
 ## Tecnologías
 
 - Laravel
