@@ -12,7 +12,11 @@
                 <div class="row">
                     <div class="col-12">
                         <button @click="getClient(client.id)" class="btn-sm btn-primary mr-2"><i class="far fa-eye"></i></button>
-                        <button @click="getClient(client.id)" class="btn-sm btn-primary mr-2"><i class="far fa-eye"></i> Detalle completo</button>
+                        
+                        <!-- <button @click="$emit('tiketsDetail', client.id)" class="btn-sm btn-primary mr-2"><i class="far fa-eye"></i> Detalle completo</button> -->
+                        
+                        <button @click="tiketsDetail(client.id)" class="btn-sm btn-primary mr-2"><i class="far fa-eye"></i> Detalle completo</button>
+                        
                         <button @click="deleteClient(client.id)" class="btn-sm btn-danger"><i class="far fa-trash-alt"></i></button>
                     </div>
                 </div>
@@ -20,6 +24,7 @@
         </div>
     </div>
 </template>
+
 
 <script>
  import axios from 'axios';
@@ -41,6 +46,10 @@
             },
             getClients() {
                 this.$emit('getClients');
+            },
+            tiketsDetail() {
+                this.$emit('tiketsDetail', this.client.id);
+                $('#tiketDetailModal').modal('show');
             },
             deleteClient(client) {
                 Swal.fire({

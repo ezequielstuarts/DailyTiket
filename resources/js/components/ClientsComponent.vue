@@ -1,6 +1,7 @@
 
 <template>
 <div>
+    <all-tiket-detail-modal :client="client"></all-tiket-detail-modal>
     <add-client-component
         @getClients="getClients"
         @deleteErrors="deleteErrors">
@@ -46,11 +47,6 @@
     import axios from 'axios';
     import toastr from 'toastr';
     import Swal from 'sweetalert2';
-    Vue.directive('focus', {
-        inserted: function (el) {
-            el.focus()
-        }
-    });
     export default {
         data() {
             return {
@@ -99,8 +95,7 @@
             },
             deleteErrors: function() {
                 this.errors = [];
-                console.log('Delete Errors');
-            }
-        }
+            },
+        },
     };
 </script>

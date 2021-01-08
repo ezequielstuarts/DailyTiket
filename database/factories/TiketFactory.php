@@ -9,5 +9,6 @@ $factory->define(Tiket::class, function (Faker $faker) {
     return [
         'amount' => rand(100,250),
         'client_id' => $faker->numberBetween($min = 1, $max = 10),
+        'user_id' => $faker->numberBetween($min = 1, $max = 3),
     ];
 });
